@@ -1,22 +1,32 @@
-import Link from "next/link";
-
-import { LatestPost } from "~/app/_components/post";
+import Link from "next/link"
 import { auth } from "~/server/auth";
-import { api, HydrateClient } from "~/trpc/server";
+import { api, HydrateClient } from "~/trpc/server"
+import {pageHeaderStyle} from "~/styles/daisystyles"
+import { db } from "~/server/db"
+import GroupTable from "~/app/_components/group/groupTable"
+import { AddGroup } from "../_components/group/addGroup";
+
 
 export default async function Home() {
-  const hello = await api.post.hello({ text: "from tRPC" });
-  const session = await auth();
+  const session = await auth()
+  const role = session?.user?.role ?? "GUEST"
 
-  if (session?.user) {
-    void api.post.getLatest.prefetch();
-  }
+  const groups = await db.group.findMany({
+    include: {
+      speciality: true
+    }
+  })
 
   return (
     <HydrateClient>
       <main>
-        Группы
+        {role}
+        <h2 className = {pageHeaderStyle}>Группы</h2>
+        <div className = "inline-flex">
+          <GroupTable groups={groups} mode={role} />
+          <AddGroup />
+        </div>
       </main>
     </HydrateClient>
-  );
+  )
 }

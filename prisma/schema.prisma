@@ -14,18 +14,6 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
-model Post {
-    id        Int      @id @default(autoincrement())
-    name      String
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-
-    createdBy   User   @relation(fields: [createdById], references: [id])
-    createdById String
-
-    @@index([name])
-}
-
 // Necessary for Next auth
 model Account {
     id                       String  @id @default(cuid())
@@ -58,11 +46,20 @@ model User {
     id            String    @id @default(cuid())
     name          String?
     email         String?   @unique
-    emailVerified DateTime?
+    password      String
+    // emailVerified DateTime?
     image         String?
     accounts      Account[]
     sessions      Session[]
-    posts         Post[]
+
+    role Role @default(STUDENT)
+}
+
+enum Role {
+    ADMIN
+    TEACHER
+    ELDER
+    STUDENT
 }
 
 model VerificationToken {
@@ -74,9 +71,130 @@ model VerificationToken {
 }
 
 
+
+// для расписания
+
+
 model Teacher {
     id         String  @id @default(cuid())
     surname    String
     name       String
     fathername String?
+
+    teacherDisc TeacherDiscipline[]
+    Schedule Schedule[]
 }
+
+
+model Discipline {
+    id         String   @id @default(cuid())
+    name       String
+    semesters  Int?
+    subgroups  Boolean? @default(false)
+
+    discTeacher TeacherDiscipline[]
+    DiscSpec DiscSpec[]
+    Schedule Schedule[]
+}
+
+
+model TeacherDiscipline {
+    id        String       @id @default(cuid())
+
+    teacher   Teacher @relation(fields: [teacherId], references: [id])
+    teacherId String
+
+    discipline  Discipline @relation(fields: [disciplineId], references: [id])
+    disciplineId String
+
+    lectures     Boolean?     @default(true)
+    subgroup     Int?
+}
+
+
+model Speciality {
+    id       String @id @default(cuid())
+    name     String
+    code     String
+    years    Int
+
+    Group Group[]
+    DiscSpec DiscSpec[]
+}
+
+
+model Group {
+    id       String @id @default(cuid())
+    name     String
+    year     Int
+    students Int
+
+    speciality Speciality @relation(fields: [specialityId], references: [id])
+    specialityId String
+
+    Schedule Schedule[]
+}
+
+
+model DiscSpec {
+    id String @id @default(cuid())
+
+    speciality Speciality @relation(fields: [specialityId], references: [id])
+    specialityId String
+
+    discipline Discipline @relation(fields: [disciplineId], references: [id])
+    disciplineId String
+
+    AcademicPlan AcademicPlan[]
+}
+
+
+model AcademicPlan {
+    id         String @id @default(cuid())
+    semester   Int
+    lestures   Int
+    practise   Int
+    labs       Int
+    ksr        Int
+    coursework Boolean? @default(false)
+    exam       Boolean? @default(false)
+    
+    discSpec DiscSpec @relation(fields: [discSpecId], references: [id])
+    discSpecId String
+}
+
+
+model Classroom {
+    id        String @id @default(cuid())
+    name      String
+    seats     Int
+    projector Boolean @default(false)
+    computers Int     @default(0)
+
+    Schedule Schedule[]
+}
+
+
+model Schedule {
+    id       String @id @default(cuid())
+    evenWeek Boolean @default(false)
+    day      String
+    lesson   Int
+
+    subgroup Int?
+    lessontype String
+
+    group Group @relation(fields: [groupId], references: [id])
+    groupId String
+
+    discipline Discipline @relation(fields: [disciplineId], references: [id])
+    disciplineId String
+
+    teacher   Teacher @relation(fields: [teacherId], references: [id])
+    teacherId String
+
+    classroom Classroom @relation(fields: [classroomID], references: [id])
+    classroomID String
+}
+
+

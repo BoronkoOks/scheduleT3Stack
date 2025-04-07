@@ -7,7 +7,7 @@ export default function TeacherTable({ teachers }: { teachers: Teacher[] }) {
   const tdStyle = "px-2 border border-black border-solid"
   
   return (
-    <div className = "bg-green-200">
+    <div>
       <table className="box-border m-4 border-collapse border-1 border-black">
         <thead>
           <tr>

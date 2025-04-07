@@ -1,14 +1,20 @@
 import Link from "next/link";
-import React from "react";
+import React, { Suspense } from "react";
 import { updateTeacher, deleteTeacher } from "~/app/api/action/teacher";
 import { db } from "~/server/db";
 import { metadata } from "~/app/layout"
-import {divForm} from "~/styles/daisystyles"
+import {pageHeaderStyle} from "~/styles/daisystyles"
+import TeacherDiscTable from "~/app/_components/teacher/teacherDisciplineTable"
+import { TeacherInfo, TeacherInfoMODE } from "~/app/_components/teacher/teacherInfo";
+import { auth } from "~/server/auth/index";
 
 
-export default async function Page(props: { params: Promise<{ id: string }> }
+export default async function Page(props: { params: Promise<{ id: string }>,
+  searchParams: Promise<{ query?: string }> }
 ) {
-  const params = await props.params
+  const searchParams = await props.searchParams;
+    const query = searchParams.query || "";
+    const params = await props.params;
 
   const teacher = await db.teacher.findUnique(
     {
@@ -17,8 +23,6 @@ export default async function Page(props: { params: Promise<{ id: string }> }
   )
 
   if (!teacher) {
-    // metadata.title = "404"
-
     return (
         <main><h1>Преподаватель не найден</h1></main>
     )
@@ -26,6 +30,9 @@ export default async function Page(props: { params: Promise<{ id: string }> }
 
   const pageTitle = "Информация о преподавателе"
 
+  const session = await auth()
+  const role = session?.user?.role ?? "ADMIN"
+  
   // metadata.title = pageTitle
 
   // const divForm = "flex max-w-xs flex-col space-y-2 mx-5 py-4 px-5 border-2 border-green-800 bg-white"
@@ -33,49 +40,31 @@ export default async function Page(props: { params: Promise<{ id: string }> }
 
   return (
     <main>
-      <form 
-        action={updateTeacher}
-        className="form-control">
-        <div className={divForm + " border-b-0"}>
-        <label className = "font-bold">{pageTitle}</label>
-          <input type="hidden" name="id" defaultValue={teacher.id ?? ""} />
-          <label>Фамилия</label>
-          <input
-            type="text"
-            name="surname"
-            required
-            className={inputClassStyle}
-            defaultValue={teacher.surname ?? ""}
-          />
-          <label>Имя</label>
-          <input
-            type="text"
-            name="name"
-            required
-            className={inputClassStyle}
-            defaultValue={teacher.name ?? ""}
-          />
-          <label>Отчество</label>
-          <input
-            type="text"
-            name="fathername"
-            required
-            className={inputClassStyle}
-            defaultValue={teacher?.fathername ?? ""}
-          />
-          <button type="submit" className="btn bg-green-500 border-2 border-green-700 mt-3 hover:text-gray-50 hover:bg-green-700">
-            Обновить
-          </button>
+    {role}
+    <table>
+      <tbody>
+      <tr>
+        <td className = "align-top">
+      <h2 className = {pageHeaderStyle}>{pageTitle}</h2>
+            
+      {role === "ADMIN" ?
+      <TeacherInfoMODE teacher = {teacher} />
+      :
+       <TeacherInfo teacher = {teacher} />
+      }
+      </td>
+      <td className = "align-top pl-10 pt-8">
+        
+        <div>
+            <h2 className=" ml-4">Дисциплины преподавателя</h2>
+            <Suspense fallback={<div>Loading...</div>}>
+              <TeacherDiscTable teacherId = {teacher.id} mode = {role} query = {query} />
+            </Suspense>
         </div>
-      </form>
-      <form action={deleteTeacher} className="form-control">
-        <div className={divForm + " border-t-0"}>
-          <input type="hidden" name="id" defaultValue={teacher.id ?? ""} />
-          <button type="submit" className="btn bg-red-500 border-2 border-red-800 hover:text-gray-50 hover:bg-red-700">
-            Удалить
-          </button>
-        </div>
-      </form>
+          </td>
+        </tr>
+        </tbody>
+        </table>
     </main>
   );
 }

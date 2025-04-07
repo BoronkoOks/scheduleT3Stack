@@ -1,22 +1,29 @@
-import Link from "next/link";
-
-import { LatestPost } from "~/app/_components/post";
-import { auth } from "~/server/auth";
-import { api, HydrateClient } from "~/trpc/server";
+import Link from "next/link"
+import { db } from "~/server/db"
+import { LatestPost } from "~/app/_components/post"
+import { auth } from "~/server/auth"
+import { api, HydrateClient } from "~/trpc/server"
+import ClassroomTable from "~/app/_components/classroom/classroomTable"
+import {pageHeaderStyle} from "~/styles/daisystyles"
+import {PlusIcon} from "@heroicons/react/16/solid"
+import { AddClassroom } from "../_components/classroom/addClassroom"
 
 export default async function Home() {
-  const hello = await api.post.hello({ text: "from tRPC" });
-  const session = await auth();
+  const session = await auth()
+  const role = session?.user?.role ?? "ADMIN"
 
-  if (session?.user) {
-    void api.post.getLatest.prefetch();
-  }
+  const classrooms = await db.classroom.findMany()
 
   return (
     <HydrateClient>
       <main>
-        Кабинеты
+        {role}
+        <h2 className = {pageHeaderStyle}>Кабинеты</h2>
+        <div className = "inline-flex">
+          <ClassroomTable classrooms = {classrooms} mode = {role} />
+          {role === "ADMIN" && <AddClassroom />}
+        </div>
       </main>
     </HydrateClient>
-  );
+  )
 }
