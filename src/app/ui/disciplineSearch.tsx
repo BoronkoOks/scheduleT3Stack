@@ -28,18 +28,23 @@ async function DisciplineToAdd({
   id_teacher: string;
 }) {
   const disciplines = await db.discipline.findMany({
-    where: {
-         name: { contains: query }
-        // AND:[{ name: { contains: query }}, {NOT:{discTeacher$.teacherId: id_teacher}}]
-    },
     include: {
-        discTeacher: true
-        }
+      discTeacher: true
+    },
+    where: {
+      AND: [
+        {name: { startsWith: query, mode: 'insensitive' }},
+        {discTeacher: {
+          none: { teacherId: id_teacher } // Исключаем дисциплины, связанные с указанным преподавателем
+        }}
+        // {NOT: {discTeacher.teacherId: id_teacher}}
+      ]
+    }
   });
   if (!disciplines) return <div></div>;
   return (
       <>
-      {disciplines.map(d=><p>{d.name}</p>) }
+      {disciplines.map(d=><p>{d.name} {d.discTeacher.id}</p>) }
       </>
     // <form action={addUserToGroup}
     // className="form-control">

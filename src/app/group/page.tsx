@@ -9,7 +9,7 @@ import { AddGroup } from "../_components/group/addGroup";
 
 export default async function Home() {
   const session = await auth()
-  const role = session?.user?.role ?? "GUEST"
+  const role = session?.user.role ?? "GUEST"
 
   const groups = await db.group.findMany({
     include: {

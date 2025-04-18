@@ -19,7 +19,7 @@ export async function Navbar ( //{session} : {session: Session}
             <Link href = "/" className = {emptyPage}>
                 Домой
             </Link>
-            <Link href = "/teacher" className = {emptyPage}
+            <Link href = "/teacher" className = {currentPageButton}
                 // onClick = {() => setCurrPage("/teacher")}
                 >
                 Преподаватели
