@@ -10,7 +10,7 @@ export default function TeacherTable({ teachers, page }: { teachers: Teacher[], 
   
   return (
     <div>
-      <table className="box-border my-4 border-collapse border-1 border-black">
+      <table className = "box-border my-4 border-collapse border-1 border-black">
         <thead>
           <tr>
             <th className={tdStyle}>№</th>

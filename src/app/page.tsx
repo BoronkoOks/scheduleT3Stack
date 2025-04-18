@@ -1,33 +1,36 @@
-// "use client"
-
 import { auth } from "~/server/auth";
-import { api, HydrateClient } from "~/trpc/server";
-import { Navbar } from "./_components/navbar";
 import { SigninLink } from "./_components/signlink"
 import React from "react";
 import Link from "next/link"
 import { updateButtonStyle } from "~/styles/daisystyles"
-import { getSession } from "next-auth/react"
+import { db } from "~/server/db"
 
 
 export default async function Home() {
   const session = await auth()
-  // const session = getSession()
-  // const role = session?.user?.role ?? "GUEST"
+  const role = session?.user.role ?? "GUEST"
+  const user = "Гость"
+
+  // if (session) {
+  //   const userDB = db.user.findFirst({
+  //     where: {id: session.user.id}
+  //   })
+
+  //   user = userDB.name
+  // }
 
   return (
     <div className = "pl-4 pt-4">
-      {JSON.stringify(session)}
-      {/* {role === "GUEST" ?
+      {role === "GUEST" ?
       <SigninLink />
       :
       <div>
-        <p>Здравствуйте, User!<br/>Вы зашли как {role}</p>
+        <p>Здравствуйте, {session?.user?.name}<br/>Вы зашли как {role}</p>
         <Link href = "/api/auth/signout" className = {"btn ml-8" + updateButtonStyle}>
           Выйти
         </Link>
       </div>
-      } */}
+      }
     </div>
   )
 }

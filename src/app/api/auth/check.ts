@@ -1,5 +1,11 @@
-import { $Enums } from "@prisma/client";
-import { auth } from "~/server/auth";
+import { $Enums } from "@prisma/client"
+import { auth } from "~/server/auth"
+
+export async function getRole() {
+    const role = (await auth())?.user.role ?? "GUEST"
+
+    return role.toString()
+}
 
 export async function isAdmin() {
     const session = await auth();

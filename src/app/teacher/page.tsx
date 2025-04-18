@@ -10,7 +10,7 @@ import React from "react"
 
 export default async function Home(props: {searchParams: Promise<{ query?: string; page?: string }>}) {
   const session = await auth()
-  const role = session?.user?.role ?? "ADMIN"
+  const role = session?.user.role ?? "GUEST"
 
   const searchParams = await props.searchParams;
   const query = searchParams.query || ""

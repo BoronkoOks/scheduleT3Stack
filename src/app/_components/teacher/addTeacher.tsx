@@ -22,7 +22,7 @@ export function AddTeacher () {
                     required
                     className={inputClassStyle}
                 />
-                </div>
+            </div>
                 <div className= {divField}>
                 <label className = "mr-12 mt-1">Имя</label>
                 <input
