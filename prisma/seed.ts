@@ -527,44 +527,75 @@ const classrooms = [
     },
 ]
 
-
-
-// const taskTypes = [
-//   { name: "Лекция" },
-//   { name: "Лабораторное занятие" },
-//   { name: "Лабораторная работа" },
-// ];
-
-// const tasks = [
-//   "Лекция. Введение",
-//   "Лекция. Среда разработки",
-//   "Лекция. Время и пространство",
-// ];
-
-// const squads = [
-//   {
-//     tutor: "Дубов",
-//     students: [
-//       ["Грищук", 2],
-//       ["Дубов", 3],
-//       ["Непомнящий", null],
-//     ],
-//   },
-//   {
-//     tutor: "Грищук",
-//     students: [
-//       ["Инаркиев", 2],
-//       ["Дубов", 3],
-//       ["Непомнящий", null],
-//     ],
-//   },
-// ];
+const groups = [
+    {
+        name: "22з",
+        year: 2022,
+        students: 19,
+        speciality: "Информационные системы и технологии"
+    },
+    {
+        name: "22к",
+        year: 2022,
+        students: 9,
+        speciality: "Информационные системы и технологии"
+    },
+    {
+        name: "22м",
+        year: 2022,
+        students: 10,
+        speciality: "Информатика и вычислительная техника"
+    },
+    {
+        name: "22ф",
+        year: 2022,
+        students: 5,
+        speciality: "Бизнес-информатика"
+    },
+    {
+        name: "23з",
+        year: 2023,
+        students: 20,
+        speciality: "Информационные системы и технологии"
+    },
+    {
+        name: "21з",
+        year: 2021,
+        students: 15,
+        speciality: "Информационные системы и технологии"
+    },
+    {
+        name: "24р",
+        year: 2024,
+        students: 12,
+        speciality: "Реклама и связи с общественностью"
+    },
+    {
+        name: "23и",
+        year: 2023,
+        students: 23,
+        speciality: "Инноватика"
+    },
+    {
+        name: "21т",
+        year: 2021,
+        students: 10,
+        speciality: "Туризм"
+    },
+    {
+        name: "24э",
+        year: 2024,
+        students: 24,
+        speciality: "Экономика"
+    },
+]
 
 
 async function main() {
     await prisma.teacher.deleteMany()
     await prisma.specialityDisc.deleteMany()
     await prisma.discipline.deleteMany()
+    await prisma.group.deleteMany()
     await prisma.speciality.deleteMany()
     await prisma.classroom.deleteMany()
 
@@ -621,6 +652,26 @@ async function main() {
         classrooms.map(async (classroom) => {
             await prisma.classroom.create({
                 data: classroom
+            })
+        })
+    )
+
+    await Promise.all(
+        groups.map(async (g) => {
+            const specialityId = await prisma.speciality.findFirstOrThrow(
+                {
+                    where: {name: g.speciality},
+                    select: {id: true}
+                }
+            )
+
+            await prisma.group.create({
+                data: {
+                    name: g.name,
+                    year: g.year,
+                    students: g.students,
+                    specialityId: specialityId.id
+                }
             })
         })
     )

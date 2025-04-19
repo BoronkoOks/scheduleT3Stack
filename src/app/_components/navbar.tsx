@@ -20,7 +20,7 @@ export async function Navbar () {
             <Link href = "/discipline" className = {navbarButton}>
                 Дисциплины
             </Link>
-            <Link href = "/group" className = {currentPageButton}>
+            <Link href = "/group" className = {navbarButton}>
                 Группы
             </Link>
             <Link href = "/speciality" className = {navbarButton}>
