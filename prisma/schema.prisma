@@ -92,8 +92,8 @@ model Discipline {
     subgroups  Boolean? @default(false)
 
     discTeacher TeacherDiscipline[]
-    DiscSpec DiscSpec[]
-    Schedule Schedule[]
+    discSpec SpecialityDisc[]
+    schedule Schedule[]
 }
 
 
@@ -118,7 +118,7 @@ model Speciality {
     years    Int
 
     Group Group[]
-    DiscSpec DiscSpec[]
+    SpecDisc SpecialityDisc[]
 }
 
 
@@ -135,7 +135,7 @@ model Group {
 }
 
 
-model DiscSpec {
+model SpecialityDisc {
     id String @id @default(cuid())
 
     speciality Speciality @relation(fields: [specialityId], references: [id])
@@ -158,8 +158,8 @@ model AcademicPlan {
     coursework Boolean? @default(false)
     exam       Boolean? @default(false)
     
-    discSpec DiscSpec @relation(fields: [discSpecId], references: [id])
-    discSpecId String
+    discSpec SpecialityDisc @relation(fields: [specDiscId], references: [id])
+    specDiscId String
 }
 
 

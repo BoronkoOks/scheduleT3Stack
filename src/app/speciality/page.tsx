@@ -1,37 +1,61 @@
-import Link from "next/link"
-import { auth } from "~/server/auth"
-import { api, HydrateClient } from "~/trpc/server"
-import {pageHeaderStyle} from "~/styles/daisystyles"
+import { HydrateClient } from "~/trpc/server"
 import { db } from "~/server/db"
-import SpecialityTable from "../_components/speciality/specialityTable"
+import SpecialityTable from "~/app/_components/speciality/specialityTable"
 import {AddSpeciality} from "~/app/_components/speciality/addSpeciality"
+import SearchInput from "~/app/ui/searchInput"
+import Pagination from "~/app/ui/pagination"
+import { getRole } from "~/app/api/auth/check"
 
-export default async function Home() {
-  const session = await auth()
-  const role = session?.user?.role ?? "ADMIN"
+export default async function Home(props:
+  {searchParams: Promise<{ query?: string; page?: string }>}
+) {
+  const role = (await getRole())
+  
+  const searchParams = await props.searchParams;
+  const query = searchParams.query || ""
+  let page = Number(searchParams?.page) || 1
+  const size = 10
 
-  const specialities = await db.speciality.findMany()
+  const whereSpecialities = {
+    OR: [
+      { name: {startsWith: query, mode: 'insensitive'}},
+      { code: {startsWith: query, mode: 'insensitive'}}
+    ]
+  }
+  
+  const specialities = await db.speciality.findMany({
+    where: whereSpecialities,
+    orderBy: {name: "asc"},
+    skip: (page - 1) * size,
+    take: size
+  })
+
+  const count = await db.speciality.count({
+      where: whereSpecialities
+    })
+
+  const pages = Math.ceil(Number(count) / size)
+
 
   return (
     <HydrateClient>
       <main>
-        {role}
-        <h2 className = {pageHeaderStyle}>Специальности</h2>
-        {/* <div className = "inline-flex"> */}
         <table>
           <tbody>
           <tr>
-            <td className = "align-top">
-          <SpecialityTable specialities = {specialities} mode = {role} />
+            <td className = "align-top pl-6 pb-6">
+              <h2 className = "ml-2 mb-4 font-bold">Специальности</h2>
+              <SearchInput placeholder = "Найти специальность..." />
+              <SpecialityTable specialities = {specialities} mode = {role} page = {page} />
+              <Pagination totalPages = {pages} />
           </td>
-          <td>
-          {role === "ADMIN" && <AddSpeciality />}
+          <td className = "align-top pt-8 pl-6">
+            {role === "ADMIN" && <AddSpeciality />}
           </td>
-        {/* </div> */}
         </tr>
         </tbody>
         </table>
       </main>
     </HydrateClient>
-  );
+  )
 }

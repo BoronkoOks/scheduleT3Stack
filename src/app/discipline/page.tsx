@@ -40,7 +40,7 @@ export default async function Home(props:
           <tr>
             <td className = "align-top pl-6 pb-6">
               <h2 className = "ml-2 mb-4 font-bold">Дисциплины</h2>
-              <SearchInput placeholder="Найти дисциплину..." />
+              <SearchInput placeholder = "Найти дисциплину..." />
               <DisciplineTable disciplines = {disciplines} mode = {role} page = {page} />
               <Pagination totalPages={pages} />
             </td>

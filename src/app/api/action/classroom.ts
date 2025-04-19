@@ -27,3 +27,23 @@ export async function updateClassroom (formData: FormData) {
     revalidatePath("/classroom")
     revalidatePath("/classroom/"+fd.id)
 }
+
+
+export async function addClassroom (formData: FormData) {
+    const fd = z.object({
+        name: z.string(),
+        seats: z.number().int(),
+        computers: z.number().int().optional(),
+        projector: z.boolean().optional()
+    })
+    .parse({
+        name: formData.get("name"),
+        seats: Number(formData.get("seats")) || 0,
+        computers: Number(formData.get("computers")) || 0,
+        projector: formData.get("projector") == "on" ? true : false
+    })
+
+    await db.classroom.create({data: fd})
+
+    revalidatePath("/classroom")
+}

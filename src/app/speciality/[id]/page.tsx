@@ -1,41 +1,56 @@
-import Link from "next/link";
-import React, { Suspense } from "react";
-import { db } from "~/server/db";
-import { metadata } from "~/app/layout"
-import { auth } from "~/server/auth/index";
-import {pageHeaderStyle} from "~/styles/daisystyles"
+import React, { Suspense } from "react"
+import { db } from "~/server/db"
 import {SpecialityInfo, SpecialityInfoMODE} from "~/app/_components/speciality/specialityInfo"
+import { getRole } from "~/app/api/auth/check"
+import SpecDiscTable from "~/app/_components/speciality/specDiscTable"
+import AddSpecDisc from "~/app/_components/speciality/addSpecDisc"
 
-export default async function Page (props: { params: Promise<{ id: string }> }) {
-    const params = await props.params
+export default async function Page (props:
+  { params: Promise<{ id: string }>, searchParams: Promise<{ query?: string;}>
+}) {
+  const role = (await getRole())
+  const params = await props.params
+  
+  const searchParams = await props.searchParams;
+  const query = searchParams.query || ""
+  // let page = Number(searchParams?.page) || 1
+  const size = 10
 
-    const speciality = await db.speciality.findUnique(
-        {
-        where: { id: params.id }
-        }
-    )
+  const speciality = await db.speciality.findUnique(
+      { where: { id: params.id } }
+  )
 
-    if (!speciality) {
-        return (
-            <main><h1>Специальность не найдена</h1></main>
-        )
-    }
+  if (!speciality) {
+      return (
+          <main><h1>Специальность не найдена</h1></main>
+      )
+  }
 
-    const pageTitle = "Информация о специальности"
-
-    const inputClassStyle = "input input-bordered"
-
-    const session = await auth()
-
-    return (
-        <main>
-            <h2 className = {pageHeaderStyle}>{pageTitle}</h2>
-            
-            {session?.user?.role === "ADMIN" ?
+  return (
+    <main>
+    <table>
+      <tbody>
+        <tr>
+          <td className = "align-top pl-8 pb-6">
+            <h2 className = "mb-4 font-bold">Информация о специальности</h2>
+                  
+            {role === "ADMIN" ?
             <SpecialityInfoMODE speciality = {speciality} />
             :
             <SpecialityInfo speciality = {speciality} />
             }
-        </main>
-    )
+          </td>
+          <td className = "align-top pl-10 pt-8">
+            <SpecDiscTable specialityId = {params.id} role = {role} />
+            {role == "ADMIN" && 
+            <div className="mt-4">
+              <AddSpecDisc query = {query} specialityId = {params.id} /> 
+            </div>
+            }
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </main>
+  )
 }

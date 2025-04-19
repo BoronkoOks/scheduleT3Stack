@@ -1,12 +1,10 @@
-import Link from "next/link";
-import React, { Suspense } from "react";
-import { db } from "~/server/db";
-import { metadata } from "~/app/layout"
+import React from "react"
+import { db } from "~/server/db"
 import {ClassroomInfoMODE, ClassroomInfo} from "~/app/_components/classroom/classroomInfo"
-import { auth } from "~/server/auth/index";
-import {pageHeaderStyle} from "~/styles/daisystyles"
+import { getRole } from "~/app/api/auth/check";
 
 export default async function Page (props: { params: Promise<{ id: string }> }) {
+    const role = (await getRole())
     const params = await props.params
 
     const classroom = await db.classroom.findUnique(
@@ -21,20 +19,23 @@ export default async function Page (props: { params: Promise<{ id: string }> }) 
         )
     }
 
-    const pageTitle = "Информация о кабинете"
-
-    const inputClassStyle = "input input-bordered"
-
-    const session = await auth()
-
     return (
         <main>
-            <h2 className = {pageHeaderStyle}>{pageTitle}</h2>
-            {session?.user?.role === "ADMIN" ?
-            <ClassroomInfoMODE classroom = {classroom}/>
-            : 
-            <ClassroomInfo classroom = {classroom} />
-            }
+            <table>
+            <tbody>
+                <tr>
+                    <td className = "align-top pl-8 pb-6">
+                    <h2 className = "mb-4 font-bold">Информация о кабинете</h2>
+                            
+                    {role === "ADMIN" ?
+                    <ClassroomInfoMODE classroom = {classroom}/>
+                    : 
+                    <ClassroomInfo classroom = {classroom} />
+                    }
+                    </td>
+                </tr>
+            </tbody>
+            </table>
         </main>
     )
 }

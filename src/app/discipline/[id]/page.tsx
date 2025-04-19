@@ -2,8 +2,6 @@ import React, { Suspense } from "react"
 import { db } from "~/server/db"
 import DiscTeacherTable from "~/app/_components/discipline/disciplineTeacherTable"
 import { DisciplineInfoMODE, DisciplineInfo } from "~/app/_components/discipline/disciplineInfo"
-import { auth } from "~/server/auth/index"
-import {pageHeaderStyle} from "~/styles/daisystyles"
 import { getRole } from "~/app/api/auth/check"
 
 
@@ -50,5 +48,5 @@ export default async function Page(props: { params: Promise<{ id: string }> }
         </tbody>
       </table>
     </main>
-  );
+  )
 }

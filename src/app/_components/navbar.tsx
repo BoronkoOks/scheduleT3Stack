@@ -11,23 +11,23 @@ export async function Navbar () {
             <Link href = "/" className = {emptyPage}>
                 Домой
             </Link>
+            <Link href = "/schedule" className = {emptyPage}>
+                Расписание
+            </Link>
             <Link href = "/teacher" className = {emptyPage}>
                 Преподаватели
             </Link>
             <Link href = "/discipline" className = {navbarButton}>
                 Дисциплины
             </Link>
-            <Link href = "/group" className = {emptyPage}>
+            <Link href = "/group" className = {currentPageButton}>
                 Группы
             </Link>
-            <Link href = "/classroom" className = {emptyPage}>
-                Кабинеты
-            </Link>
-            <Link href = "/speciality" className = {currentPageButton}>
+            <Link href = "/speciality" className = {navbarButton}>
                 Специальности
             </Link>
-            <Link href = "/schedule" className = {emptyPage}>
-                Расписание
+            <Link href = "/classroom" className = {navbarButton}>
+                Кабинеты
             </Link>
         </div>
     )

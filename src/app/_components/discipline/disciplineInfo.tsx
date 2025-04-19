@@ -1,14 +1,12 @@
-import Link from "next/link";
-import React, { Suspense } from "react"
-import { db } from "~/server/db"
-import { metadata } from "~/app/layout"
-import {divForm, updateButtonStyle, deleteButtonStyle} from "~/styles/daisystyles"
+import React from "react"
+import {updateButtonStyle, deleteButtonStyle} from "~/styles/daisystyles"
 import { Discipline } from "@prisma/client"
 import { updateDiscipline, deleteDiscipline } from "~/app/api/action/discipline";
 
 
 export function DisciplineInfoMODE ({discipline} : {discipline: Discipline}) {
     const inputClassStyle = "input input-bordered"
+    const divStyle = "flex align-middle"
 
     return (
         <main>
@@ -17,7 +15,7 @@ export function DisciplineInfoMODE ({discipline} : {discipline: Discipline}) {
                 <div>
                     <input type="hidden" name="id" defaultValue={discipline.id ?? ""} />
 
-                    <div className = "flex align-middle">
+                    <div className = {divStyle}>
                         <label className = "mt-2 mr-2">Название</label>
                         <input
                             type="text"
@@ -27,7 +25,7 @@ export function DisciplineInfoMODE ({discipline} : {discipline: Discipline}) {
                             defaultValue = {discipline.name ?? ""}
                         />
                     </div>
-                    <div className = "flex align-middle mt-2">
+                    <div className = {divStyle + " mt-2"}>
                         <label className = "mt-2 mr-2">Семестров</label>
                         <input
                             type="number"
@@ -38,8 +36,8 @@ export function DisciplineInfoMODE ({discipline} : {discipline: Discipline}) {
                             defaultValue = {Number(discipline.semesters) || ""}
                         />
                     </div>
-                    <div className = "flex align-middle">
-                        <label className = "mt-1  mb-4">Деление на подгруппы</label>
+                    <div className = {divStyle}>
+                        <label className = "mt-1 mb-4">Деление на подгруппы</label>
                         <input
                             type="checkbox"
                             name="subgroups"

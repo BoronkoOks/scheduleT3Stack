@@ -1,33 +1,31 @@
-import Link from "next/link";
-import React, { Suspense } from "react"
-import { db } from "~/server/db"
-import { metadata } from "~/app/layout"
-import {divForm, updateButtonStyle, deleteButtonStyle} from "~/styles/daisystyles"
+import React from "react"
+import { updateButtonStyle, deleteButtonStyle} from "~/styles/daisystyles"
 import { Speciality } from "@prisma/client"
+import { deleteSpeciality, updateSpeciality } from "~/app/api/action/speciality"
 
 
 export function SpecialityInfoMODE ({speciality} : {speciality: Speciality}) {
+  const inputClassStyle = "input input-bordered"
+  const divStyle = "flex align-middle"
+
     return (
         <main>
         <div>
-          <form 
-          // action={updateClassroom}
-          className="form-control">
-          <div className = "pl-6"
-          //className={divForm + " border-b-0"}
-          >
+          <form action={updateSpeciality} className="form-control">
+          <div>
             <input type="hidden" name="id" defaultValue={speciality.id ?? ""} />
-            <div className = "flex align-middle">
+
+            <div className = {divStyle}>
             <label  className = "mt-2 mr-2">Название</label>
               <input
                 type="text"
                 name="name"
                 required
-                className="input input-bordered w-96"
+                className={inputClassStyle + " w-96"}
                 defaultValue={speciality.name ?? ""}
               />
             </div>
-            <div className = "flex align-middle mt-4">
+            <div className = {divStyle + " mt-2"}>
               <label className = "mt-2 mr-2">Код</label>
               <input
                 type="text"
@@ -36,29 +34,28 @@ export function SpecialityInfoMODE ({speciality} : {speciality: Speciality}) {
                 maxLength = {8}
                 defaultValue = {speciality.code ?? ""}
               />
-          </div>
-            <div className = "flex align-middle mt-4 ml-4">
+            </div>
+            <div className = {divStyle + " mt-2 mb-4"}>
               <label className = "mt-2 mr-2">Лет обучения</label>
               <input
                 type="number"
-                min = "0"
+                min = "1"
                 name="years"
-                className={"input input-bordered w-16"}
+                className={inputClassStyle + " w-16"}
                 defaultValue = {speciality.years ?? 0}
-                />
+              />
             </div>
-            <button type="submit" className={updateButtonStyle + " ml-2"}>
-              Обновить
-            </button>
+            <div>
+              <button type="submit" className={updateButtonStyle + " w-2/3"}>
+                Обновить
+              </button>
+            </div>
           </div>
         </form>
-        <form //action={deleteClassroom}
-         className="form-control">
-          <div className = "mt-6 ml-9"
-          //className={divForm + " border-t-0"}
-          >
+        <form action = {deleteSpeciality} className="form-control">
+          <div className = "mt-4">
             <input type="hidden" name="id" defaultValue={speciality.id ?? ""} />
-            <button type="submit" className={deleteButtonStyle}>
+            <button type="submit" className = {deleteButtonStyle + " w-2/3"}>
               Удалить
             </button>
           </div>
@@ -71,7 +68,7 @@ export function SpecialityInfoMODE ({speciality} : {speciality: Speciality}) {
 
 export function SpecialityInfo ({speciality} : {speciality: Speciality}) {
     return (
-      <div className = "m-4">
+      <div>
         <p><b>Название:</b> {speciality.name}</p>
         <p><b>Код:</b> {speciality.code}</p>
         <p><b>Лет обучения:</b> {speciality.years}</p>

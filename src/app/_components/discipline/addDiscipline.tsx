@@ -3,7 +3,7 @@ import { createDiscipline } from "~/app/api/action/discipline"
 import {divForm, updateButtonStyle} from "~/styles/daisystyles"
 
 export function AddDiscipline () {
-    const divField = "flex align-middle mb-4"
+    const divField = "flex align-middle"
     const inputClassStyle = "input border-2 boder-dashed"
 
     return (
@@ -11,10 +11,11 @@ export function AddDiscipline () {
         <details className = "collapse" tabIndex={0}>
             <summary className = "collapse-title text-xl font-medium">
                 <div className = "flex">
-            <PlusIcon  className = "w-6" /> <BookOpenIcon className = "w-6" />
-            </div>
+                    <PlusIcon  className = "w-6" />
+                    <BookOpenIcon className = "w-6" />
+                </div>
             </summary>
-            <form className = "collapse-content form-control " action = {createDiscipline} >
+            <form className = "collapse-content form-control" action = {createDiscipline} >
                 <label>Название</label>
                 <input
                     type="text"
@@ -22,7 +23,7 @@ export function AddDiscipline () {
                     required
                     className={inputClassStyle + " w-full my-2"}
                 />
-                <div className = "flex align-middle">
+                <div className = {divField}>
                     <label className = "mt-2 mr-2">Семестров</label>
                     <input
                         type="number"
@@ -32,7 +33,7 @@ export function AddDiscipline () {
                         className={inputClassStyle + " w-16 mb-1"}
                     />
                 </div>
-                <div className = "flex align-middle">
+                <div className = {divField}>
                     <label className = "mt-1  mb-4">Деление на подгруппы</label>
                     <input
                         type="checkbox"

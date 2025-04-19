@@ -275,6 +275,11 @@ const disciplines = [
         name: "Физическая культура и спорт",
         semesters: 1,
         subgroups: false
+    },
+    {
+        name: "Статистика",
+        semesters: 1,
+        subgroups: false
     }
 ]
 
@@ -396,57 +401,133 @@ const specialities = [
     }
 ]
 
-// const users = [
-//   {
-//     email: "ian@example.com",
-//     surname: "Ян",
-//     surname: "Непомнящий",
-//     group: "Группа 1",
-//   },
-//   {
-//     email: "vlad@example.com",
-//     surname: "Владислав",
-//     surname: "Артемьев",
-//     group: "Группа 1",
-//   },
-//   {
-//     email: "dan@example.com",
-//     surname: "Даниил",
-//     surname: "Дубов",
-//     group: "Группа 1",
-//   },
-//   {
-//     email: "sash@example.com",
-//     surname: "Александр",
-//     surname: "Грищук",
-//     group: "Группа 1",
-//     subgroup: 2,
-//   },
-//   {
-//     email: "ern@example.com",
-//     surname: "Эрнесто",
-//     surname: "Инаркиев",
-//     group: "Группа 2",
-//   },
-// ];
+const specialtyDiscs = [
+    {
+        speciality: "Информатика и вычислительная техника",
+        discipline: "Иностранный язык"
+    },
+    {
+        speciality: "Информационные системы и технологии",
+        discipline: "Иностранный язык"
+    },
+    {
+        speciality: "Бизнес-информатика",
+        discipline: "Иностранный язык"
+    },
+    {
+        speciality: "Информатика и вычислительная техника",
+        discipline: "Информатика"
+    },
+    {
+        speciality: "Информационные системы и технологии",
+        discipline: "Информатика"
+    },
+    {
+        speciality: "Бизнес-информатика",
+        discipline: "Информатика"
+    },
+    {
+        speciality: "Информатика и вычислительная техника",
+        discipline: "Проектирование информационных систем и баз данных"
+    },
+    {
+        speciality: "Информационные системы и технологии",
+        discipline: "Проектирование информационных систем и баз данных"
+    },
+    {
+        speciality: "Бизнес-информатика",
+        discipline: "Экономика и управление проектами"
+    },
+    {
+        speciality: "Информатика и вычислительная техника",
+        discipline: "Электроника и схемотехника"
+    },
+    {
+        speciality: "Информационные системы и технологии",
+        discipline: "Электроника и схемотехника"
+    },
+    {
+        speciality: "Бизнес-информатика",
+        discipline: "Статистика"
+    },
+]
 
-// const groups = [
-//   {
-//     name: "Группа 1",
-//   },
-//   {
-//     name: "Группа 2",
-//   },
-//   {
-//     name: "Группа 3",
-//   },
-//   {
-//     name: "Группа 4",
-//   },
-//   {
-//     name: "Группа 5",
-//   },
-// ];
+const classrooms = [
+    {
+        name: "1-322",
+        seats: 6,
+        projector: false,
+        computers: 10
+    },
+    {
+        name: "1-325",
+        seats: 0,
+        projector: true,
+        computers: 10
+    },
+    {
+        name: "1-326",
+        seats: 24,
+        projector: true,
+        computers: 12
+    },
+    {
+        name: "1-330",
+        seats: 30,
+        projector: true,
+        computers: 16
+    },
+    {
+        name: "1-320",
+        seats: 100,
+        projector: true,
+        computers: 0
+    },
+    {
+        name: "1-220",
+        seats: 100,
+        projector: true,
+        computers: 0
+    },
+    {
+        name: "1-467",
+        seats: 30,
+        projector: false,
+        computers: 14
+    },
+    {
+        name: "спортзал",
+        seats: 0,
+        projector: false,
+        computers: 0
+    },
+    {
+        name: "1-160",
+        seats: 100,
+        projector: true,
+        computers: 0
+    },
+    {
+        name: "1-112",
+        seats: 50,
+        projector: true,
+        computers: 0
+    },
+    {
+        name: "1-471",
+        seats: 50,
+        projector: true,
+        computers: 0
+    },
+    {
+        name: "1-420",
+        seats: 100,
+        projector: true,
+        computers: 0
+    },
+]
+
+
 
 // const taskTypes = [
 //   { name: "Лекция" },
@@ -482,8 +563,10 @@ const specialities = [
 
 async function main() {
     await prisma.teacher.deleteMany()
+    await prisma.specialityDisc.deleteMany()
     await prisma.discipline.deleteMany()
     await prisma.speciality.deleteMany()
+    await prisma.classroom.deleteMany()
 
     await Promise.all(
         teachers.map(async (teacher) => {
@@ -505,6 +588,39 @@ async function main() {
         specialities.map(async (speciality) => {
             await prisma.speciality.create({
                 data: speciality
+            })
+        })
+    )
+
+    await Promise.all(
+        specialtyDiscs.map(async (sd) => {
+            const specialityId = await prisma.speciality.findFirstOrThrow(
+                {
+                    where: {name: sd.speciality},
+                    select: {id: true}
+                }
+            )
+
+            const disciplineId = await prisma.discipline.findFirstOrThrow(
+                {
+                    where: {name: sd.discipline},
+                    select: {id: true}
+                }
+            )
+
+            await prisma.specialityDisc.create({
+                data: {
+                    specialityId: specialityId.id,
+                    disciplineId: disciplineId.id
+                }
+            })
+        })
+    )
+
+    await Promise.all(
+        classrooms.map(async (classroom) => {
+            await prisma.classroom.create({
+                data: classroom
             })
         })
     )

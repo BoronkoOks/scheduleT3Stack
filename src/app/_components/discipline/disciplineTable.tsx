@@ -4,7 +4,8 @@ import type { Discipline } from "@prisma/client";
 import Link from "next/link";
 
 export default function DisciplineTable({ disciplines, mode, page }:
-  { disciplines: Discipline[], mode: string, page?: number }) {
+  { disciplines: Discipline[], mode: string, page?: number }
+) {
   const edit = mode === "ADMIN"
   const startNumber = ((page ?? 1) - 1) * 10
 
@@ -19,7 +20,7 @@ export default function DisciplineTable({ disciplines, mode, page }:
             <th className={tdStyle + "whitespace-nowrap"}>Название</th>
             <th className={tdStyle}>Семестров</th>
             <th className={tdStyle}>Деление на подгруппы</th>
-            {edit && <th></th>}
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -34,7 +35,7 @@ export default function DisciplineTable({ disciplines, mode, page }:
                   {edit ?
                     <PencilSquareIcon className="w-4" />
                     :
-                    "->"
+                    "<-"
                   }
                 </Link>
               </td>
