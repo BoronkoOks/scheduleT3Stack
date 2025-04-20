@@ -1,132 +1,208 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, Role, User } from "@prisma/client";
 
-const prisma = new PrismaClient();
+const prisma = new PrismaClient()
+
+const users = [
+    {
+        email: "admin@oks.ru",
+        role: "ADMIN"
+    },
+    {
+        email: "abramov@oks.ru",
+        role: "TEACHER"
+    },
+    {
+        email: "altman@oks.ru",
+        role: "TEACHER"
+    },
+    {
+        email: "vaseeva@oks.ru",
+        role: "TEACHER"
+    },
+    {
+        email: "volchanina@oks.ru",
+        role: "TEACHER"
+    },
+    {
+        email: "galich@oks.ru",
+        role: "TEACHER"
+    },
+    {
+        email: "elizarov@oks.ru",
+        role: "TEACHER"
+    },
+    {
+        email: "okishev@oks.ru",
+        role: "TEACHER"
+    },
+    {
+        email: "tixonova@oks.ru",
+        role: "TEACHER"
+    },
+    {
+        email: "tsirkin@oks.ru",
+        role: "TEACHER"
+    },
+    {
+        email: "lol@oks.ru",
+        role: "STUDENT"
+    },
+    {
+        email: "kek@oks.ru",
+        role: "STUDENT"
+    }
+]
 
 const teachers = [
     {
         surname: "Абрамов",
         name: "Пётр",
-        fathername: "Дмитриевич"
+        fathername: "Дмитриевич",
+        email: "abramov@oks.ru"
     },
     {
         surname: "Альтман",
         name: "Евгений",
-        fathername: "Анатольевич"
+        fathername: "Анатольевич",
+        email: "altman@oks.ru"
     },
     {
         surname: "Васеева",
         name: "Татьяна",
-        fathername: "Валериевна"
+        fathername: "Валериевна",
+        email: "vaseeva@oks.ru"
     },
     {
         surname: "Волчанина",
         name: "Мария",
-        fathername: "Андреевна"
+        fathername: "Андреевна",
+        email: "volchanina@oks.ru"
     },
     {
         surname: "Галич",
         name: "Юлия",
-        fathername: "Геннадьевна"
+        fathername: "Геннадьевна",
+        email: "galich@oks.ru"
     },
     {
         surname: "Гудков",
         name: "Юрий",
-        fathername: "Александрович"
+        fathername: "Александрович",
+        email: null
     },
     {
         surname: "Елизаров",
         name: "Дмитрий",
-        fathername: "Александрович"
+        fathername: "Александрович",
+        email: "elizarov@oks.ru"
     },
     {
         surname: "Исачкин",
         name: "Сергей",
-        fathername: "Павлович"
+        fathername: "Павлович",
+        email: null
     },
     {
         surname: "Кораблёв",
         name: "Владимир",
-        fathername: "Николаевич"
+        fathername: "Николаевич",
+        email: null
     },
     {
         surname: "Лаврухин",
         name: "Андрей",
-        fathername: "Александрович"
+        fathername: "Александрович",
+        email: null
     },
     {
         surname: "Малютин",
         name: "Андрей",
-        fathername: "Геннадьевич"
+        fathername: "Геннадьевич",
+        email: null
     },
     {
         surname: "Мусаткина",
         name: "Бэла",
-        fathername: "Владимировна"
+        fathername: "Владимировна",
+        email: null
     },
     {
         surname: "Окишев",
         name: "Андрей",
-        fathername: "Сергеевич"
+        fathername: "Сергеевич",
+        email: "okishev@oks.ru"
     },
     {
         surname: "Павлова",
         name: "Ирина",
-        fathername: "Владимировна"
+        fathername: "Владимировна",
+        email: null
     },
     {
         surname: "Пашкова",
         name: "Наталья",
-        fathername: "Викторовна"
+        fathername: "Викторовна",
+        email: null
     },
     {
         surname: "Печеневская",
         name: "Наталья",
-        fathername: "Геннадьевна"
+        fathername: "Геннадьевна",
+        email: null
     },
     {
         surname: "Пономарёв",
         name: "Антон",
-        fathername: "Витальевич"
+        fathername: "Витальевич",
+        email: null
     },
     {
         surname: "Сердюк",
         name: "Владимир",
-        fathername: "Александрович"
+        fathername: "Александрович",
+        email: null
     },
     {
         surname: "Слижевская",
         name: "Анастасия",
-        fathername: "Николаевна"
+        fathername: "Николаевна",
+        email: null
     },
     {
         surname: "Смалев",
         name: "Александр",
-        fathername: "Николаевич"
+        fathername: "Николаевич",
+        email: null
     },
     {
         surname: "Тихонова",
         name: "Наталья",
-        fathername: "Елексеевна"
+        fathername: "Елексеевна",
+        email: "tixonova@oks.ru"
     },
     {
         surname: "Тодер",
         name: "Георгий",
-        fathername: "Борисович"
+        fathername: "Борисович",
+        email: null
     },
     {
         surname: "Фесенко",
         name: "Ольга",
-        fathername: "Петровна"
+        fathername: "Петровна",
+        email: null
     },
     {
         surname: "Хмырова",
         name: "Наталья",
-        fathername: "Анатольевна"
+        fathername: "Анатольевна",
+        email: null
     },
     {
         surname: "Циркин",
         name: "Виталий",
-        fathername: "Степанович"
+        fathername: "Степанович",
+        email: "tsirkin@oks.ru"
     }
 ]
 
@@ -593,6 +669,7 @@ const groups = [
 
 async function main() {
     await prisma.teacher.deleteMany()
+    await prisma.user.deleteMany()
     await prisma.specialityDisc.deleteMany()
     await prisma.discipline.deleteMany()
     await prisma.group.deleteMany()
@@ -600,9 +677,32 @@ async function main() {
     await prisma.classroom.deleteMany()
 
     await Promise.all(
+        users.map(async (user) => {
+            await prisma.user.create({
+                data: {
+                    email: user.email,
+                    role: user.role as Role
+                }
+            })
+        })
+    )
+
+    await Promise.all(
         teachers.map(async (teacher) => {
+
+            const user = await prisma.user.findUnique({
+                where: {
+                    email: teacher.email || ""
+                }
+            })
+
             await prisma.teacher.create({
-                data: teacher
+                data: {
+                    surname: teacher.surname,
+                    name: teacher.name,
+                    fathername: teacher.fathername,
+                    userId: user?.id
+                }
             })
         })
     )

@@ -1,7 +1,10 @@
 
 import Link from "next/link"
+import { getRole } from "~/app/api/auth/check"
 
 export async function Navbar () {
+    const role = (await getRole())
+
     const navbarButton = "btn bg-green-400 border-1 rounded-none border-green-600 hover:text-gray-50 hover:bg-green-600"
     const emptyPage = "btn bg-gray-500 border-1 text-gray-300 rounded-none border-gray-600"
     const currentPageButton = "btn bg-gray-100 border-2 rounded-none border-green-700 border-b-0 hover:text-gray-50 hover:bg-green-600"
@@ -14,6 +17,12 @@ export async function Navbar () {
             <Link href = "/schedule" className = {emptyPage}>
                 Расписание
             </Link>
+
+            {role == "ADMIN" && 
+            <Link href = "/user" className = {currentPageButton}>
+                Пользователи
+            </Link>
+            }
             <Link href = "/teacher" className = {emptyPage}>
                 Преподаватели
             </Link>
