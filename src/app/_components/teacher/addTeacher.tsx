@@ -41,8 +41,8 @@ export function AddTeacher () {
                     className={inputClassStyle}
                 />
                 </div>
-                <div className= {divField}>
-                <button type="submit" className={updateButtonStyle + " ml-24"}>
+                <div>
+                <button type="submit" className={updateButtonStyle + " w-full"}>
                     Добавить
                 </button>
                 </div> 

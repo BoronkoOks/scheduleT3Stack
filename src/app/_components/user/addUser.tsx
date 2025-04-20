@@ -1,4 +1,4 @@
-import {UserPlusIcon} from "@heroicons/react/16/solid"
+import {PlusIcon, UserCircleIcon} from "@heroicons/react/16/solid"
 import { createGroup } from "~/app/api/action/group"
 import { createUser } from "~/app/api/action/user"
 import { db } from "~/server/db"
@@ -21,7 +21,10 @@ export async function AddUser () {
         <div className = "border-2 border-green-700 bg-white rounded-lg">
         <details className = "collapse" tabIndex={0}>
             <summary className = "collapse-title text-xl font-medium">
-                <UserPlusIcon  className = "w-6" />
+                <div className = "flex">
+                    <PlusIcon  className = "w-6" />
+                    <UserCircleIcon className = "w-6" />
+                </div>
             </summary>
             <form className = "collapse-content form-control" action = {createUser}>
                 <input type="hidden" name="id" defaultValue="" />

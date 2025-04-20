@@ -8,7 +8,7 @@ export default function SpecialityTable ({specialities, mode, page} :
     {specialities: Speciality[], mode: string, page?: number }
 ) {
     const edit = mode === "ADMIN"
-    const startNumber = ((page ?? 1) - 1) * 10
+    const startNumber = ((page ?? 1) - 1) * 10 + 1
   
     const tdStyle = "px-2 border border-black border-solid"
 
@@ -27,7 +27,7 @@ export default function SpecialityTable ({specialities, mode, page} :
             <tbody>
                 {specialities.map((s, i) => (
                 <tr key={s.id}>
-                    <td className={tdStyle + " align-items-end"}><p>{startNumber + i + 1}</p></td>
+                    <td className={tdStyle + " align-items-end"}><p>{startNumber + i}</p></td>
                     <td className={tdStyle}>{s.name}</td>
                     <td className={tdStyle}>{s.code}</td>
                     <td className={tdStyle}>{s.years}</td>

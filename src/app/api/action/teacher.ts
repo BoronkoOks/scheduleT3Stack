@@ -59,17 +59,20 @@ export async function createTeacher (formData: FormData) {
 
 export async function addDiscToTeacher(formData: FormData) {
     const fd = z
-      .object({
-        id_teacher: z.string(),
-        id_discipline: z.string(),
-      })
-      .parse({
-        id_teacher: formData.get("id_teacher"),
-        id_discipline: formData.get("id_discipline"),
-      })
+    .object({
+        teacherId: z.string(),
+        disciplineId: z.string(),
+    })
+    .parse({
+        teacherId: formData.get("id_teacher"),
+        disciplineId: formData.get("id_discipline"),
+    })
+    
+    await db.teacherDiscipline.create({data: fd})
+    revalidatePath("/teacher/"+fd.id_teacher)
 }
 
-export async function deleteTeacherDiscipline (formData: FormData) {
+export async function deleteTeacherDisc (formData: FormData) {
     const fd = z.object({
         id: z.string(),
         id_teacher: z.string()

@@ -11,10 +11,8 @@ export default async function Page (props:
   const role = (await getRole())
   const params = await props.params
   
-  const searchParams = await props.searchParams;
+  const searchParams = await props.searchParams
   const query = searchParams.query || ""
-  // let page = Number(searchParams?.page) || 1
-  const size = 10
 
   const speciality = await db.speciality.findUnique(
       { where: { id: params.id } }

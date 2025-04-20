@@ -19,11 +19,11 @@ export async function Navbar () {
             </Link>
 
             {role == "ADMIN" && 
-            <Link href = "/user" className = {currentPageButton}>
+            <Link href = "/user" className = {navbarButton}>
                 Пользователи
             </Link>
             }
-            <Link href = "/teacher" className = {emptyPage}>
+            <Link href = "/teacher" className = {currentPageButton}>
                 Преподаватели
             </Link>
             <Link href = "/discipline" className = {navbarButton}>

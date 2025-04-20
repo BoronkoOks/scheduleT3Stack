@@ -6,11 +6,13 @@ import { AddTeacher } from "../_components/teacher/addTeacher"
 import Pagination from "../ui/pagination"
 import SearchInput from "~/app/ui/searchInput"
 import React from "react"
+import { getRole } from "~/app/api/auth/check"
 
 
-export default async function Home(props: {searchParams: Promise<{ query?: string; page?: string }>}) {
-  const session = await auth()
-  const role = session?.user.role ?? "GUEST"
+export default async function Home(props:
+  {searchParams: Promise<{ query?: string; page?: string }>}
+) {
+  const role = (await getRole())
 
   const searchParams = await props.searchParams;
   const query = searchParams.query || ""
@@ -46,7 +48,7 @@ export default async function Home(props: {searchParams: Promise<{ query?: strin
             <td className = "align-top pl-6 pb-6">
               <h2 className = "ml-2 mb-4 font-bold">Преподаватели</h2>
               <SearchInput placeholder="Найти преподавателя..." />
-              <TeacherTable teachers = {teachers} page = {page} />
+              <TeacherTable teachers = {teachers} page = {page} mode = {role} />
               <Pagination totalPages={pages} />
             </td>
             <td className = "align-top pt-8 pl-6">

@@ -3,8 +3,11 @@ import { PencilSquareIcon } from "@heroicons/react/24/outline";
 import type { Teacher } from "@prisma/client";
 import Link from "next/link";
 
-export default function TeacherTable({ teachers, page }: { teachers: Teacher[], page?: number }) {
-  const startNumber = ((page ?? 1) - 1) * 10
+export default function TeacherTable({ teachers, mode, page }: 
+  { teachers: Teacher[], mode: string, page?: number }
+) {
+  const edit = mode === "ADMIN"
+  const startNumber = ((page ?? 1) - 1) * 10 + 1
 
   const tdStyle = "px-2 border border-black border-solid"
   
@@ -23,14 +26,18 @@ export default function TeacherTable({ teachers, page }: { teachers: Teacher[], 
         <tbody>
           {teachers.map((t, i) => (
             <tr key={t.id}>
-              <td className={tdStyle + " align-items-end"}><p>{startNumber + i + 1}</p></td>
+              <td className={tdStyle + " align-items-end"}><p>{startNumber + i}</p></td>
               <td className={tdStyle}>{t.surname}</td>
               <td className={tdStyle}>{t.name}</td>
               <td className={tdStyle}>{t?.fathername ?? ""}</td>
-              <td className={tdStyle + " border-none"}>
-              <Link href={`/teacher/${t.id}`}>
-                  <PencilSquareIcon className="w-4" />
-              </Link>
+              <td className = "px-2  border-none">
+                <Link href={`/teacher/${t.id}`}>
+                {edit ?
+                    <PencilSquareIcon className="w-4" />
+                    :
+                    "<-"
+                }
+                </Link>
               </td>
             </tr>
           ))}

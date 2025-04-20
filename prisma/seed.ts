@@ -91,6 +91,12 @@ const teachers = [
         email: null
     },
     {
+        surname: "Давыдов",
+        name: "Алексей",
+        fathername: "Игоревич",
+        email: null
+    },
+    {
         surname: "Елизаров",
         name: "Дмитрий",
         fathername: "Александрович",
@@ -666,8 +672,72 @@ const groups = [
     },
 ]
 
+const teacherDiscs = [
+    {
+        teacher: "Абрамов",
+        discipline: "Философия",
+        lectures: true,
+        subgroup: null
+    },
+    {
+        teacher: "Альтман",
+        discipline: "Прикладное программирование",
+        lectures: true,
+        subgroup: null
+    },
+    {
+        teacher: "Альтман",
+        discipline: "Объектно-ориентированное программирование",
+        lectures: true,
+        subgroup: null
+    },
+    {
+        teacher: "Лаврухин",
+        discipline: "Основы теории управления",
+        lectures: true,
+        subgroup: null
+    },
+    {
+        teacher: "Волчанина",
+        discipline: "Основы теории управления",
+        lectures: true,
+        subgroup: null
+    },
+    {
+        teacher: "Сердюк",
+        discipline: "История",
+        lectures: true,
+        subgroup: null
+    },
+    {
+        teacher: "Тихонова",
+        discipline: "Проектирование информационных систем и баз данных",
+        lectures: true,
+        subgroup: null
+    },
+    {
+        teacher: "Хмырова",
+        discipline: "Физика",
+        lectures: true,
+        subgroup: 1
+    },
+    {
+        teacher: "Тодер",
+        discipline: "Физика",
+        lectures: true,
+        subgroup: 2
+    },
+    {
+        teacher: "Давыдов",
+        discipline: "Информатика",
+        lectures: true,
+        subgroup: 2
+    },
+]
+
 
 async function main() {
+    await prisma.teacherDiscipline.deleteMany()
     await prisma.teacher.deleteMany()
     await prisma.user.deleteMany()
     await prisma.specialityDisc.deleteMany()
@@ -771,6 +841,33 @@ async function main() {
                     year: g.year,
                     students: g.students,
                     specialityId: specialityId.id
+                }
+            })
+        })
+    )
+
+    await Promise.all(
+        teacherDiscs.map(async (td) => {
+            const teacherId = await prisma.teacher.findFirstOrThrow(
+                {
+                    where: {surname: td.teacher},
+                    select: {id: true}
+                }
+            )
+
+            const disciplineId = await prisma.discipline.findFirstOrThrow(
+                {
+                    where: {name: td.discipline},
+                    select: {id: true}
+                }
+            )
+
+            await prisma.teacherDiscipline.create({
+                data: {
+                    teacherId: teacherId.id,
+                    disciplineId: disciplineId.id,
+                    lectures: td.lectures,
+                    subgroup: td.subgroup
                 }
             })
         })

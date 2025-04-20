@@ -1,5 +1,5 @@
 import React, { Suspense } from "react"
-import {updateButtonStyle} from "~/styles/daisystyles"
+import {deleteButtonStyle, updateButtonStyle} from "~/styles/daisystyles"
 import { Teacher } from "@prisma/client"
 import { deleteTeacher, updateTeacher } from "~/app/api/action/teacher"
 
@@ -7,12 +7,11 @@ import { deleteTeacher, updateTeacher } from "~/app/api/action/teacher"
 export function TeacherInfoMODE ({teacher}: {teacher: Teacher}) {
     const divField = "flex align-middle mb-4"
     const inputClassStyle = "input input-bordered"
-    const deleteButtonStyle = "btn bg-red-500 border-2 border-red-800 px-5 ml-2 hover:text-gray-50 hover:bg-red-700"
 
     return (
         <main>
         <div>
-            <form action={updateTeacher} className="form-control pt-4 ml-4">
+            <form action={updateTeacher} className="form-control">
                 <input type="hidden" name="id" defaultValue={teacher.id ?? ""} />
 
                 <div className = {divField}>
@@ -45,17 +44,17 @@ export function TeacherInfoMODE ({teacher}: {teacher: Teacher}) {
                         defaultValue={teacher?.fathername ?? ""}
                     />
                 </div>
-                <div className = {divField}>
-                    <button type="submit" className={updateButtonStyle + " ml-14"}>
+                <div>
+                    <button type="submit" className={updateButtonStyle + " w-full"}>
                         Обновить
                     </button>
                 </div>
             </form>
             <form action={deleteTeacher} className="form-control">
-                <div className = "ml-16">
+                <div className = "mt-4">
                     <input type="hidden" name="id" defaultValue={teacher.id ?? ""} />
 
-                    <button type="submit" className = {deleteButtonStyle}>
+                    <button type="submit" className = {deleteButtonStyle + " w-full"}>
                         Удалить
                     </button>
                 </div>
