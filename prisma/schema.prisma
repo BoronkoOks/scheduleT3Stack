@@ -115,7 +115,7 @@ model TeacherDiscipline {
     disciplineId String
 
     lectures     Boolean?     @default(true)
-    subgroup     Int?
+    subgroup     String?
 }
 
 

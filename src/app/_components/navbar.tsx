@@ -23,7 +23,7 @@ export async function Navbar () {
                 Пользователи
             </Link>
             }
-            <Link href = "/teacher" className = {currentPageButton}>
+            <Link href = "/teacher" className = {navbarButton}>
                 Преподаватели
             </Link>
             <Link href = "/discipline" className = {navbarButton}>

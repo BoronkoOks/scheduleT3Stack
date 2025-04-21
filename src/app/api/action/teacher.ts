@@ -4,6 +4,7 @@ import { revalidatePath } from "node_modules/next/cache"
 import { redirect } from "node_modules/next/navigation"
 import {z} from "zod"
 import { db } from "~/server/db"
+import { divForm } from "~/styles/daisystyles"
 
 export async function updateTeacher (formData: FormData) {
     const fd = z.object({
@@ -69,7 +70,7 @@ export async function addDiscToTeacher(formData: FormData) {
     })
     
     await db.teacherDiscipline.create({data: fd})
-    revalidatePath("/teacher/"+fd.id_teacher)
+    revalidatePath("/teacher/"+fd.teacherId)
 }
 
 export async function deleteTeacherDisc (formData: FormData) {
@@ -84,4 +85,32 @@ export async function deleteTeacherDisc (formData: FormData) {
 
     await db.teacherDiscipline.delete({where: {id: fd.id}})
     revalidatePath("/teacher/"+fd.id_teacher)
+}
+
+
+export async function updateDiscOfTeacher(formData: FormData) {
+    const fd = z
+    .object({
+        id: z.string(),
+        teacherId: z.string(),
+        lectures: z.boolean(),
+        subgroup: z.string()
+    })
+    .parse({
+        id: formData.get("id"),
+        teacherId: formData.get("teacherId"),
+        lectures: formData.get("lectures") == "on" ? true : false,
+        subgroup: formData.get("subgroup") ?? "2"
+    })
+
+    console.log(fd, "\n\n")
+    
+    await db.teacherDiscipline.update({
+        where: { id: fd.id},
+        data: {
+            lectures: fd.lectures,
+            subgroup: fd.subgroup
+        }
+    })
+    revalidatePath("/teacher/"+fd.teacherId)
 }

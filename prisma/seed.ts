@@ -677,61 +677,61 @@ const teacherDiscs = [
         teacher: "Абрамов",
         discipline: "Философия",
         lectures: true,
-        subgroup: null
+        subgroup: "все"
     },
     {
         teacher: "Альтман",
         discipline: "Прикладное программирование",
         lectures: true,
-        subgroup: null
+        subgroup: "все"
     },
     {
         teacher: "Альтман",
         discipline: "Объектно-ориентированное программирование",
         lectures: true,
-        subgroup: null
+        subgroup: "все"
     },
     {
         teacher: "Лаврухин",
         discipline: "Основы теории управления",
         lectures: true,
-        subgroup: null
+        subgroup: "-"
     },
     {
         teacher: "Волчанина",
         discipline: "Основы теории управления",
         lectures: true,
-        subgroup: null
+        subgroup: "все"
     },
     {
         teacher: "Сердюк",
         discipline: "История",
         lectures: true,
-        subgroup: null
+        subgroup: "все"
     },
     {
         teacher: "Тихонова",
         discipline: "Проектирование информационных систем и баз данных",
         lectures: true,
-        subgroup: null
+        subgroup: "все"
     },
     {
         teacher: "Хмырова",
         discipline: "Физика",
         lectures: true,
-        subgroup: 1
+        subgroup: "1"
     },
     {
         teacher: "Тодер",
         discipline: "Физика",
         lectures: true,
-        subgroup: 2
+        subgroup: "2"
     },
     {
         teacher: "Давыдов",
         discipline: "Информатика",
         lectures: true,
-        subgroup: 2
+        subgroup: "2"
     },
 ]
 

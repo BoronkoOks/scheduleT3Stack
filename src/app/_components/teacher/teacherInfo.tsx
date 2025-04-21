@@ -1,5 +1,5 @@
 import React, { Suspense } from "react"
-import {deleteButtonStyle, updateButtonStyle} from "~/styles/daisystyles"
+import {updateButtonStyle} from "~/styles/daisystyles"
 import { Teacher } from "@prisma/client"
 import { deleteTeacher, updateTeacher } from "~/app/api/action/teacher"
 
@@ -7,6 +7,7 @@ import { deleteTeacher, updateTeacher } from "~/app/api/action/teacher"
 export function TeacherInfoMODE ({teacher}: {teacher: Teacher}) {
     const divField = "flex align-middle mb-4"
     const inputClassStyle = "input input-bordered"
+    const deleteButtonStyle = "btn bg-red-500 border-2 border-red-800 hover:text-gray-50 hover:bg-red-700"
 
     return (
         <main>
