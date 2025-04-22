@@ -10,7 +10,7 @@ export async function MyApp ({
     return (
         <HydrateClient>
             <header>
-                {session && <Navbar/>}
+                {session && <Navbar role = {session?.user.role ?? "STUDENT"}/>}
             </header>
             <main>
                 {children}

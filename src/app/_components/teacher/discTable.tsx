@@ -46,18 +46,17 @@ export default function DiscTable({ teacherId, mode }:
       })
 
     const putMutation = useMutation({
-        mutationFn: async (dt: TeacherDiscipline) => {
-            console.log(dt.id, "\n\n")
-            const response = await fetch(`/api/teacherDisciplines/${dt.id}`, {
-                method: "PUT",
-                // body: JSON.stringify({lectures: dt.lectures, subgroup: dt.subgroup}),
-                body: JSON.stringify({lectures: dt.lectures, subgroup: dt.subgroup}),
-                })
+      mutationFn: async (dt: TeacherDiscipline) => {
+          console.log(dt.id, "\n\n")
+          const response = await fetch(`/api/teacherDisciplines/${dt.id}`, {
+              method: "PUT",
+              body: JSON.stringify({lectures: dt.lectures, subgroup: dt.subgroup}),
+              })
 
-              if (!response.ok) {
-                 console.log(response)
-              }
-            return response.json();
+            if (!response.ok) {
+                console.log(response)
+            }
+          return response.json();
     },
     });
 
@@ -73,15 +72,7 @@ export default function DiscTable({ teacherId, mode }:
                 return d
             }
             else {
-                return {
-                  ...d, lectures: lectures
-                  // id: d.id,
-                  // teacherId: d.teacherId,
-                  // disciplineId: d.disciplineId,
-                  // lectures: lectures,
-                  // subgroup: d.subgroup,
-                  // discipline: {...d.discipline}
-                }
+                return { ...d, lectures: lectures }
             }
         }))
     }
@@ -152,16 +143,20 @@ export default function DiscTable({ teacherId, mode }:
                     <>{d.subgroup ? d.subgroup : "-"}</>
                     }
                 </td>
-                <td>
-                  <button onClick={() => handleSave(d.id)}>
-                    <CheckIcon className="w-6 mr-2 ml-2" />
-                  </button>
-                </td>
-                <td>
-                  <button onClick={() => handleDelete(d.id)}>
-                    <MinusIcon className="w-6 mr-2 ml-2" />
-                  </button>
-                </td>
+                {
+                  edit && <>
+                    <td>
+                      <button onClick={() => handleSave(d.id)}>
+                        <CheckIcon className="w-6 mr-2 ml-2" />
+                      </button>
+                    </td>
+                    <td>
+                      <button onClick={() => handleDelete(d.id)}>
+                        <MinusIcon className="w-6 mr-2 ml-2" />
+                      </button>
+                    </td>
+                  </>
+                }
             </tr>
         )
         }

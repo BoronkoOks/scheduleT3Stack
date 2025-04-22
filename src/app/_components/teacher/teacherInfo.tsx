@@ -68,7 +68,7 @@ export function TeacherInfoMODE ({teacher}: {teacher: Teacher}) {
 
 export function TeacherInfo ({teacher}: {teacher: Teacher}) {
     return (
-        <div className = "m-4">
+        <div>
             <p><b>Фамилия:</b> {teacher.surname}</p>
             <p><b>Имя:</b> {teacher.name}</p>
             <p><b>Отчество:</b> {teacher.fathername}</p>

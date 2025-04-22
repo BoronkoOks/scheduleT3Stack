@@ -7,6 +7,7 @@ import { AddClassroom } from "../_components/classroom/addClassroom"
 import SearchInput from "~/app/ui/searchInput"
 import Pagination from "~/app/ui/pagination"
 import { getRole } from "~/app/api/auth/check"
+import { metadata } from "../layout"
 
 export default async function Home(props:
   {searchParams: Promise<{ query?: string; page?: string }>}
@@ -17,6 +18,9 @@ export default async function Home(props:
   const query = searchParams.query || ""
   let page = Number(searchParams?.page) || 1
   const size = 10
+
+  // document.title = "Кабинеты"
+  metadata.title = "Кабинеты"
 
   const whereClassrooms = { name: {startsWith: query, mode: 'insensitive'}}
     

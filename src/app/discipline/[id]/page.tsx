@@ -1,13 +1,19 @@
 import React, { Suspense } from "react"
 import { db } from "~/server/db"
-import DiscTeacherTable from "~/app/_components/discipline/disciplineTeacherTable"
 import { DisciplineInfoMODE, DisciplineInfo } from "~/app/_components/discipline/disciplineInfo"
 import { getRole } from "~/app/api/auth/check"
+import AddTeacherDropdown from "~/app/_components/discipline/teachersRelated/addTeacherDropdown"
+import DiscTeacherDropdown from "~/app/_components/discipline/teachersRelated/discTeacherDropdown"
 
 
-export default async function Page(props: { params: Promise<{ id: string }> }
+export default async function Page(props:
+  { params: Promise<{ id: string }>,
+    searchParams: Promise<{ query?: string }> }
 ) {
   const role = (await getRole())
+  
+  const searchParams = await props.searchParams
+  const query = searchParams.query || ""
   const params = await props.params
 
   const discipline = await db.discipline.findUnique(
@@ -38,10 +44,13 @@ export default async function Page(props: { params: Promise<{ id: string }> }
           </td>
           <td className = "align-top pl-10 pt-8">
             <div>
-              <h2 className=" ml-4"><b>Преподаватели дисциплины</b></h2>
-              <Suspense fallback={<div>Loading...</div>}>
-                <DiscTeacherTable disciplineId = {discipline.id} mode = {role} />
-              </Suspense>
+              <DiscTeacherDropdown disciplineId = {params.id} role = {role} />
+
+              {role == "ADMIN" &&
+              <div className="mt-4">
+                <AddTeacherDropdown disciplineId = {params.id} query= {query}/>
+              </div>
+              }
             </div>
           </td>
         </tr>
