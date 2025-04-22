@@ -5,51 +5,63 @@ const prisma = new PrismaClient()
 const users = [
     {
         email: "admin@oks.ru",
-        role: "ADMIN"
+        role: "ADMIN",
+        name: "Админ всея кафедры"
     },
     {
         email: "abramov@oks.ru",
-        role: "TEACHER"
+        role: "TEACHER",
+        name: "Пётр"
     },
     {
         email: "altman@oks.ru",
-        role: "TEACHER"
+        role: "TEACHER",
+        name: "Евгений"
     },
     {
         email: "vaseeva@oks.ru",
-        role: "TEACHER"
+        role: "TEACHER",
+        name: "Татьяна"
     },
     {
         email: "volchanina@oks.ru",
-        role: "TEACHER"
+        role: "TEACHER",
+        name: "Мария"
     },
     {
         email: "galich@oks.ru",
-        role: "TEACHER"
+        role: "TEACHER",
+        name: "Юлия"
     },
     {
         email: "elizarov@oks.ru",
-        role: "TEACHER"
+        role: "TEACHER",
+        name: "Дмитрий"
     },
     {
         email: "okishev@oks.ru",
-        role: "TEACHER"
+        role: "TEACHER",
+        name: "Андрей"
     },
     {
         email: "tixonova@oks.ru",
-        role: "TEACHER"
+        role: "TEACHER",
+        name: "Наталья"
     },
     {
         email: "tsirkin@oks.ru",
-        role: "TEACHER"
+        role: "TEACHER",
+        name: "Виталий"
     },
     {
         email: "lol@oks.ru",
-        role: "STUDENT"
+        role: "STUDENT",
+        name: null
     },
     {
         email: "kek@oks.ru",
-        role: "STUDENT"
+        role: "STUDENT",
+        name: null
     }
 ]
 
@@ -135,8 +147,7 @@ const teachers = [
     {
         surname: "Окишев",
         name: "Андрей",
-        fathername: "Сергеевич",
-        email: "okishev@oks.ru"
+        fathername: "Сергеевич"
     },
     {
         surname: "Павлова",
@@ -751,7 +762,8 @@ async function main() {
             await prisma.user.create({
                 data: {
                     email: user.email,
-                    role: user.role as Role
+                    role: user.role as Role,
+                    name: user.name
                 }
             })
         })

@@ -23,6 +23,12 @@ export function Navbar (
                 Домой
             </Link>
 
+            <Link href = "/myprofile" onClick={()=> setCurrentPage("/myprofile")}
+                className = {currentPage == "/myprofile" ? currentPageButton : navbarButton}
+            >
+                Мой профиль
+            </Link>
+
             <Link href = "/schedule" onClick={()=> setCurrentPage("/schedule")}
                 className = {currentPage == "/schedule" ? currentPageButton : emptyPage}
             >
