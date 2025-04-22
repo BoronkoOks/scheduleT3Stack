@@ -1,9 +1,9 @@
 import React, { Suspense } from "react"
 import { db } from "~/server/db"
-import TeacherDiscTable from "~/app/_components/teacher/teacherDiscTable"
+import TeacherDiscDropdown from "~/app/_components/teacher/disciplinesRelated/teacherDiscDropdown"
 import { TeacherInfo, TeacherInfoMODE } from "~/app/_components/teacher/teacherInfo"
 import { getRole } from "~/app/api/auth/check"
-import AddTeacherDisc from "~/app/_components/teacher/addTeacherDisc"
+import AddDiscDropdown from "~/app/_components/teacher/disciplinesRelated/addDiscDropdown"
 
 
 export default async function Page(props:
@@ -27,12 +27,7 @@ export default async function Page(props:
         <main><h1>Преподаватель не найден</h1></main>
     )
   }
-
-  // const teacherDiscipline = await db.teacherDiscipline.findMany({
-  //   where: { teacherId: params.id },
-  //   include: {discipline: true}
-  // })
-
+  
   return (
     <main>
     <table>
@@ -49,10 +44,10 @@ export default async function Page(props:
           </td>
           <td className = "align-top pl-10 pt-8">
             <div>
-                <TeacherDiscTable teacherId = {params.id} mode = {role} query = {query} />
+                <TeacherDiscDropdown teacherId = {params.id} mode = {role} />
                 {role == "ADMIN" && 
                 <div className="mt-4">
-                  <AddTeacherDisc query = {query} teacherId = {params.id} /> 
+                  <AddDiscDropdown query = {query} teacherId = {params.id} /> 
                 </div>
                 }
             </div>
@@ -61,5 +56,5 @@ export default async function Page(props:
         </tbody>
       </table>
     </main>
-  );
+  )
 }

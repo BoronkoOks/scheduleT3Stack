@@ -1,10 +1,10 @@
-import React, { Suspense } from "react";
-import { ArrowLongDownIcon, MinusIcon, CheckIcon } from "@heroicons/react/24/outline"
-import DiscTable from "./discTable";
+import React, { Suspense } from "react"
+import { ArrowLongDownIcon } from "@heroicons/react/24/outline"
+import TeacherDiscTable from "./teacherDiscTable"
 
 
-export default async function TeacherDiscTable ({ teacherId, mode, query }:
-    {teacherId: string, mode: string, query: string }
+export default async function TeacherDiscDropdown ({ teacherId, mode }:
+    {teacherId: string, mode: string}
   ) {
   return (
     <div className = "border-2 border-gray-500 rounded-lg">
@@ -16,12 +16,9 @@ export default async function TeacherDiscTable ({ teacherId, mode, query }:
         </div>
       </summary>
         <Suspense fallback={<div>Загрузка...</div>}>
-          <DiscTable teacherId = {teacherId} mode = {mode} />
+          <TeacherDiscTable teacherId = {teacherId} mode = {mode} />
         </Suspense>
       </details>
     </div>
   )
 }
-
-
-

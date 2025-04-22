@@ -1,4 +1,4 @@
-import React, { Suspense } from "react"
+import React from "react"
 import { ArrowLongDownIcon } from "@heroicons/react/24/outline"
 import DiscTeacherTable from "./discTeacherTable"
 

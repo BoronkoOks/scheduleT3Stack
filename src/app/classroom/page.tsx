@@ -19,7 +19,6 @@ export default async function Home(props:
   let page = Number(searchParams?.page) || 1
   const size = 10
 
-  // document.title = "Кабинеты"
   metadata.title = "Кабинеты"
 
   const whereClassrooms = { name: {startsWith: query, mode: 'insensitive'}}

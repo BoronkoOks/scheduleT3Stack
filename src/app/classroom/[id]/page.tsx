@@ -8,9 +8,7 @@ export default async function Page (props: { params: Promise<{ id: string }> }) 
     const params = await props.params
 
     const classroom = await db.classroom.findUnique(
-        {
-        where: { id: params.id }
-        }
+        { where: { id: params.id } }
     )
 
     if (!classroom) {
@@ -28,9 +26,9 @@ export default async function Page (props: { params: Promise<{ id: string }> }) 
                     <h2 className = "mb-4 font-bold">Информация о кабинете</h2>
                             
                     {role === "ADMIN" ?
-                    <ClassroomInfoMODE classroom = {classroom}/>
-                    : 
-                    <ClassroomInfo classroom = {classroom} />
+                        <ClassroomInfoMODE classroom = {classroom}/>
+                        : 
+                        <ClassroomInfo classroom = {classroom} />
                     }
                     </td>
                 </tr>

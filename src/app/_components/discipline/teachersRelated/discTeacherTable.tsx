@@ -1,9 +1,9 @@
-"use client";
+"use client"
 
-import React, { Suspense } from "react";
+import React from "react"
 import {MinusIcon, CheckIcon } from "@heroicons/react/24/outline"
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { TeacherDiscipline } from "@prisma/client";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { TeacherDiscipline } from "@prisma/client"
 
 export default function DiscTeacherTable({ disciplineId, role }:
     {disciplineId: string, role: string }
@@ -92,7 +92,6 @@ export default function DiscTeacherTable({ disciplineId, role }:
   }
 
 
-
   if (isPending) {
     return (
       <div className="m-4">Загрузка...</div>
@@ -108,70 +107,70 @@ export default function DiscTeacherTable({ disciplineId, role }:
 
   return (
     <table className="box-border mx-4 mb-4 border-collapse border-1 border-black border-collapse">
-      <thead>
-        <tr>
-          <th className={tdStyle}>№</th>
-          <th className={tdStyle + "whitespace-nowrap"}>Преподаватель</th>
-          <th className={tdStyle + " pr-0.5"}>Лекции</th>
-          <th className={tdStyle}>Подгруппа</th>
+    <thead>
+      <tr>
+        <th className={tdStyle}>№</th>
+        <th className={tdStyle + "whitespace-nowrap"}>Преподаватель</th>
+        <th className={tdStyle + " pr-0.5"}>Лекции</th>
+        <th className={tdStyle}>Подгруппа</th>
 
-          {edit && <>
-            <th></th>
-            <th></th>
-          </>
-          }
-        </tr>
-      </thead>
-      <tbody>
-        {teachersDetails.map( (d, i) => 
-            <tr key = {d.id}>
-                <td className={tdStyle}><p>{i+1}</p></td>
-                <td className={tdStyle}>{d.teacher.surname + " " + d.teacher.name.substring(0,1) + ". " + d.teacher.fathername.substring(0,1) + "."}</td>
-                <td className={tdStyle}>
-                    {edit ?
-                        <input
-                        type="checkbox"
-                        name="lectures"
-                        className = "ml-6"
-                        defaultChecked = {d.lectures ?? false}
-                        onChange={(e) => handleChangeLectures(d.id, e.target.checked)}
-                        />
-                        :
-                        <>{d?.lectures? "+": "-"}</>
-                    }
-                </td>
-                <td className={tdStyle}>
-                    {edit ?
-                    <select name = "subgroup" defaultValue = {d.subgroup ?? "-"}
-                      onChange={e => handleChangeSubgroup(d.id, e.target.value)}
-                    >
-                        <option key = "-" value = "-">-</option>
-                        <option key = "1" value = "1">1</option>
-                        <option key = "2" value = "2">2</option>
-                        <option key = "все" value = "все">все</option>
-                    </select>
-                    :
-                    <>{d.subgroup ? d.subgroup : "-"}</>
-                    }
-                </td>
-                {
-                  edit && <>
-                    <td>
-                      <button onClick={() => handleSave(d.id)}>
-                        <CheckIcon className="w-6 mr-2 ml-2" />
-                      </button>
-                    </td>
-                    <td>
-                      <button onClick={() => handleDelete(d.id)}>
-                        <MinusIcon className="w-6 mr-2 ml-2" />
-                      </button>
-                    </td>
-                  </>
-                }
-            </tr>
-        )
+        {edit && <>
+          <th></th>
+          <th></th>
+        </>
         }
-      </tbody>
+      </tr>
+    </thead>
+    <tbody>
+      {teachersDetails.map( (d, i) => 
+        <tr key = {d.id}>
+            <td className={tdStyle}><p>{i+1}</p></td>
+            <td className={tdStyle}>{d.teacher.surname + " " + d.teacher.name.substring(0,1) + ". " + d.teacher.fathername.substring(0,1) + "."}</td>
+            <td className={tdStyle}>
+              {edit ?
+                <input
+                type="checkbox"
+                name="lectures"
+                className = "ml-6"
+                defaultChecked = {d.lectures ?? false}
+                onChange={(e) => handleChangeLectures(d.id, e.target.checked)}
+                />
+                :
+                <>{d?.lectures? "+": "-"}</>
+              }
+            </td>
+            <td className={tdStyle}>
+                {edit ?
+                  <select name = "subgroup" defaultValue = {d.subgroup ?? "-"}
+                    onChange={e => handleChangeSubgroup(d.id, e.target.value)}
+                  >
+                      <option key = "-" value = "-">-</option>
+                      <option key = "1" value = "1">1</option>
+                      <option key = "2" value = "2">2</option>
+                      <option key = "все" value = "все">все</option>
+                  </select>
+                  :
+                  <>{d.subgroup ? d.subgroup : "-"}</>
+                }
+            </td>
+            {
+              edit && <>
+                <td>
+                  <button onClick={() => handleSave(d.id)}>
+                    <CheckIcon className="w-6 mr-2 ml-2" />
+                  </button>
+                </td>
+                <td>
+                  <button onClick={() => handleDelete(d.id)}>
+                    <MinusIcon className="w-6 mr-2 ml-2" />
+                  </button>
+                </td>
+              </>
+            }
+        </tr>
+      )
+      }
+    </tbody>
     </table>
   )
 }
