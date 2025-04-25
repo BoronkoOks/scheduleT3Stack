@@ -747,11 +747,82 @@ const teacherDiscs = [
 ]
 
 
+const academicPlan = [
+    {
+        speciality: "09.02.03",
+        discipline: "Инженерия информационных систем",
+        semester: 6,
+        lectures: 32,
+        practise: 0,
+        labs: 32,
+        ksr: 12,
+        coursework: false,
+        exam: true
+    },
+    {
+        speciality: "09.02.03",
+        discipline: "Инфокоммуникационные системы и сети",
+        semester: 6,
+        lectures: 32,
+        practise: 0,
+        labs: 48,
+        ksr: 28,
+        coursework: true,
+        exam: true
+    },
+    {
+        speciality: "09.02.03",
+        discipline: "Компьютерные комплексы и сети",
+        semester: 6,
+        lectures: 32,
+        practise: 0,
+        labs: 32,
+        ksr: 12,
+        coursework: false,
+        exam: true
+    },
+    {
+        speciality: "09.02.03",
+        discipline: "Прикладное программирование",
+        semester: 6,
+        lectures: 32,
+        practise: 0,
+        labs: 32,
+        ksr: 28,
+        coursework: true,
+        exam: true
+    },
+    {
+        speciality: "09.02.03",
+        discipline: "Тестирование программных продуктов",
+        semester: 6,
+        lectures: 32,
+        practise: 0,
+        labs: 48,
+        ksr: 12,
+        coursework: false,
+        exam: true
+    },
+    {
+        speciality: "09.02.03",
+        discipline: "Физическая культура и спорт",
+        semester: 6,
+        lectures: 16,
+        practise: 0,
+        labs: 0,
+        ksr: 0,
+        coursework: false,
+        exam: false
+    },
+]
+
+
 async function main() {
+    await prisma.academicPlan.deleteMany()
+    await prisma.specialityDisc.deleteMany()
     await prisma.teacherDiscipline.deleteMany()
     await prisma.teacher.deleteMany()
     await prisma.user.deleteMany()
-    await prisma.specialityDisc.deleteMany()
     await prisma.discipline.deleteMany()
     await prisma.group.deleteMany()
     await prisma.speciality.deleteMany()
@@ -882,6 +953,96 @@ async function main() {
                     subgroup: td.subgroup
                 }
             })
+        })
+    )
+
+    const allSD = await prisma.specialityDisc.findMany({
+        include: {
+            speciality: true,
+            discipline: true
+        }
+    })
+
+
+    // console.log(allSD, "\n\n\n")
+
+    await Promise.all(
+        academicPlan.map(async (plan) => {
+
+            // console.log("\n\n'", plan.discipline, "' ", plan.speciality)
+
+            // const specDisc = await prisma.specialityDisc.findFirstOrThrow({
+            //     include: {
+            //         speciality: true,
+            //         discipline: true
+            //     },
+            //     where: {
+            //             AND: [
+            //                 {speciality: {code: plan.speciality.toString()}},
+            //                 {discipline: {name: plan.discipline.toString()}},
+            //             ]
+            //         },
+            //     }
+            // )
+
+            // const specDisc = allSD.find(sd => sd.speciality.code.toString() === plan.speciality.toString())
+            // const specDisc = allSD.map(sd => {
+                
+            // })
+
+            // const spec = await prisma.specialityDisc.findFirst({
+            //     include: {
+            //         speciality: true,
+            //         discipline: true
+            //     },
+            //     where: {discipline: {name: plan.discipline}}
+            // }
+            // )
+
+            // const disc = await prisma.specialityDisc.findFirst({
+            //     include: {
+            //         speciality: true,
+            //         discipline: true
+            //     },
+            //     where: {speciality: {name: plan.speciality}}
+            // }
+            // )
+
+            // const specDisc = allSD.find(sd => ( sd.discipline.name == plan.discipline))
+
+            // const speciality = await prisma.speciality.findFirstOrThrow({
+            //     where: {name: plan.speciality}
+            // })
+            // const discipline = await prisma.discipline.findFirstOrThrow({
+            //     where: {name: plan.discipline}
+            // })
+
+            // console.log("\n", plan.discipline, " : ", discipline, ", ", speciality, "\n")
+
+            // const specDisc = await prisma.specialityDisc.findFirstOrThrow(
+            //     {where: {
+            //             AND: [
+            //                 {specialityId: speciality.id},
+            //                 {disciplineId: discipline.id},
+            //             ]
+            //         },
+            //     }
+            // )
+
+            // console.log("\n", plan.discipline, " : ", specDisc, "\n\n")
+
+            // await prisma.academicPlan.create({
+            //     data: {
+            //         specDiscId: specDisc.id,
+            //         semester: plan.semester,
+            //         lectures: plan.lectures,
+            //         practise: plan.practise,
+            //         labs: plan.labs,
+            //         ksr: plan.ksr,
+            //         coursework: plan.coursework,
+            //         exam: plan.exam
+            //     }
+            // })
         })
     )
 }

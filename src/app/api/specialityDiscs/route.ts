@@ -3,14 +3,14 @@ import { db } from "~/server/db"
 
 export async function GET(request: NextRequest) {
     const searchParams = request.nextUrl.searchParams;  
-    const teacherId = searchParams.get("teacherId") || ""
+    const specialityId = searchParams.get("specialityId") || ""
 
-    const disciplines = await db.teacherDiscipline.findMany({
-      where: { teacherId: teacherId },
-      include: {
-        discipline: true
-        },
-        orderBy: {discipline: {name: "asc"}},
+    const disciplines = await db.specialityDisc.findMany({
+    where: { specialityId: specialityId },
+    include: {
+        speciality: true
+      },
+      orderBy: {discipline: {name: "asc"}},
     }) ?? []
 
   return new Response(JSON.stringify(disciplines), {

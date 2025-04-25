@@ -2,8 +2,8 @@ import React, { Suspense } from "react"
 import { db } from "~/server/db"
 import {SpecialityInfo, SpecialityInfoMODE} from "~/app/_components/speciality/specialityInfo"
 import { getRole } from "~/app/api/auth/check"
-import SpecDiscTable from "~/app/_components/speciality/specDiscTable"
-import AddSpecDisc from "~/app/_components/speciality/addSpecDisc"
+import SpecDiscDropdown from "~/app/_components/speciality/disciplineRelated/specDiscDropdown"
+import AddSpecDiscDropdown from "~/app/_components/speciality/disciplineRelated/addSpecDiscDropdown"
 
 export default async function Page (props:
   { params: Promise<{ id: string }>, searchParams: Promise<{ query?: string;}>
@@ -39,10 +39,10 @@ export default async function Page (props:
             }
           </td>
           <td className = "align-top pl-10 pt-8">
-            <SpecDiscTable specialityId = {params.id} role = {role} />
+            <SpecDiscDropdown specialityId = {params.id} role = {role} />
             {role == "ADMIN" && 
             <div className="mt-4">
-              <AddSpecDisc query = {query} specialityId = {params.id} /> 
+              <AddSpecDiscDropdown query = {query} specialityId = {params.id} /> 
             </div>
             }
           </td>

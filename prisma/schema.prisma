@@ -159,7 +159,7 @@ model SpecialityDisc {
 model AcademicPlan {
     id         String @id @default(cuid())
     semester   Int
-    lestures   Int
+    lectures   Int
     practise   Int
     labs       Int
     ksr        Int

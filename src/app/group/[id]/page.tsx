@@ -1,7 +1,6 @@
-import React, { Suspense } from "react";
-import { db } from "~/server/db";
-import { auth } from "~/server/auth/index";
-import {pageHeaderStyle} from "~/styles/daisystyles"
+import React from "react"
+import { db } from "~/server/db"
+import { auth } from "~/server/auth/index"
 import { GroupInfo, GroupInfoMODE } from "~/app/_components/group/groupInfo";
 import { getRole } from "~/app/api/auth/check";
 

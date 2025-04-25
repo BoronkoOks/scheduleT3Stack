@@ -1,7 +1,7 @@
 import React from "react"
 import { db } from "~/server/db"
 import {ClassroomInfoMODE, ClassroomInfo} from "~/app/_components/classroom/classroomInfo"
-import { getRole } from "~/app/api/auth/check";
+import { getRole } from "~/app/api/auth/check"
 
 export default async function Page (props: { params: Promise<{ id: string }> }) {
     const role = (await getRole())

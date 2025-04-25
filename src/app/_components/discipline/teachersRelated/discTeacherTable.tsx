@@ -62,6 +62,14 @@ export default function DiscTeacherTable({ disciplineId, role }:
       deleteMutation.mutate(id);
   }
 
+  function handleSave(id: string) {
+    const td = teachersDetails.find(d => d.id == id)
+      if (td){
+        putMutation.mutate(td)
+      }
+  }
+
+
   function handleChangeLectures (id: string, lectures: boolean) {
       setTeachersDetails(teachersDetails.map(d => {
           if (d.id != id) {
@@ -82,13 +90,6 @@ export default function DiscTeacherTable({ disciplineId, role }:
               return {...d, subgroup: subgroup}
           }
       }))
-  }
-
-  function handleSave(id: string) {
-    const td = teachersDetails.find(d => d.id == id)
-      if (td){
-        putMutation.mutate(td)
-      }
   }
 
 

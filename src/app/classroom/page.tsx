@@ -1,8 +1,6 @@
 import { db } from "~/server/db"
-import { auth } from "~/server/auth"
 import { HydrateClient } from "~/trpc/server"
 import ClassroomTable from "~/app/_components/classroom/classroomTable"
-import {pageHeaderStyle} from "~/styles/daisystyles"
 import { AddClassroom } from "../_components/classroom/addClassroom"
 import SearchInput from "~/app/ui/searchInput"
 import Pagination from "~/app/ui/pagination"

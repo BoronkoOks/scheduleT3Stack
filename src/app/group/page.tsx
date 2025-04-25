@@ -1,14 +1,11 @@
-import Link from "next/link"
-import { auth } from "~/server/auth";
-import { api, HydrateClient } from "~/trpc/server"
-import {pageHeaderStyle} from "~/styles/daisystyles"
+import { HydrateClient } from "~/trpc/server"
 import { db } from "~/server/db"
 import GroupTable from "~/app/_components/group/groupTable"
 import { AddGroup } from "../_components/group/addGroup"
 import SearchInput from "~/app/ui/searchInput"
 import Pagination from "~/app/ui/pagination"
 import { getRole } from "~/app/api/auth/check"
-import { metadata } from "../layout";
+import { metadata } from "../layout"
 
 
 export default async function Home(props:
