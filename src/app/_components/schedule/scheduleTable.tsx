@@ -1,20 +1,15 @@
 import React from "react"
-import { PencilSquareIcon, PlusIcon } from "@heroicons/react/24/outline"
 import type { Schedule } from "@prisma/client"
-import Link from "next/link"
 import {tdStyle} from "~/styles/daisystyles"
-import { db } from "~/server/db"
 
 
-export default async function ScheduleTable ({schedule, mode}: {schedule: string, mode: string}) {
-    const edit = mode === "ADMIN"
-
-    const days = ["Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"]
-
-    const criteria = "gr1"
+export default async function ScheduleTable ({schedule, forWho}: {schedule: Schedule[], forWho: string}) {
+    const days = [1, 2, 3, 4, 5, 6]
+    const lessons = [1, 2, 3, 4, 5]
 
     return (
-        <table>
+        <>
+        <table className="text-xs">
             <thead>
                 <tr>
                     <th></th>
@@ -24,165 +19,97 @@ export default async function ScheduleTable ({schedule, mode}: {schedule: string
                     <th className={tdStyle}>Четверг</th>
                     <th className={tdStyle}>Пятница</th>
                     <th className={tdStyle}>Суббота</th>
-                    {edit && <th></th>}
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td className={tdStyle}>1-я</td>
-                    {days.map(day =>
-                        <td className={tdStyle}>
-                            <ScheduleCell evenWeek = {false} day = {day} lesson = {1} criteria = "group"
-                                condition = "gr1"
-                            />
-                        </td>
+                {lessons.map(l => 
+                    <tr key = {l}>
+                        <td className={tdStyle} key = {l}>{l}-я</td>
+                        {days.map(d =>
+                            <td className={tdStyle} key = {d}>
+                                <ScheduleCell forWho = {forWho}
+                                    lessons = {schedule.filter(s => (s.day == d && s.lesson == l))}/>
+                            </td>
                         )}
-                </tr>
-                <tr>
-                    <td className={tdStyle}>2-я</td>
-                    {days.map(day =>
-                        <td className={tdStyle}>
-                            <ScheduleCell evenWeek = {false} day = {day} lesson = {2} criteria = "group"
-                                condition = "gr1"
-                            />
-                        </td>
-                        )}
-                </tr>
-                <tr>
-                    <td className={tdStyle}>3-я</td>
-                    {days.map(day =>
-                        <td className={tdStyle}>
-                            <ScheduleCell evenWeek = {false} day = {day} lesson = {3} criteria = "group"
-                                condition = "gr1"
-                            />
-                        </td>
-                        )}
-                </tr>
-                <tr>
-                    <td className={tdStyle}>4-я</td>
-                    {days.map(day =>
-                        <td className={tdStyle}>
-                            <ScheduleCell evenWeek = {false} day = {day} lesson = {4} criteria = "group"
-                                condition = "gr1"
-                            />
-                        </td>
-                        )}
-                </tr>
-                <tr>
-                    <td className={tdStyle}>5-я</td>
-                    {days.map(day =>
-                        <td className={tdStyle}>
-                            <ScheduleCell evenWeek = {false} day = {day} lesson = {5} criteria = "group"
-                                condition = "gr1"
-                            />
-                        </td>
-                        )}
-                </tr>
-                <tr>
-                    <td className={tdStyle}>1-я</td>
-                    {days.map(day =>
-                        <td className={tdStyle}>
-                            <ScheduleCell evenWeek = {true} day = {day} lesson = {1} criteria = "group"
-                                condition = "gr1"
-                            />
-                        </td>
-                        )}
-                </tr>
-                <tr>
-                    <td className={tdStyle}>2-я</td>
-                    {days.map(day =>
-                        <td className={tdStyle}>
-                            <ScheduleCell evenWeek = {true} day = {day} lesson = {2} criteria = "group"
-                                condition = "gr1"
-                            />
-                        </td>
-                        )}
-                </tr>
-                <tr>
-                    <td className={tdStyle}>3-я</td>
-                    {days.map(day =>
-                        <td className={tdStyle}>
-                            <ScheduleCell evenWeek = {true} day = {day} lesson = {3} criteria = "group"
-                                condition = "gr1"
-                            />
-                        </td>
-                        )}
-                </tr>
-                <tr>
-                    <td className={tdStyle}>4-я</td>
-                    {days.map(day =>
-                        <td className={tdStyle}>
-                            <ScheduleCell evenWeek = {true} day = {day} lesson = {4} criteria = "group"
-                                condition = "gr1"
-                            />
-                        </td>
-                        )}
-                </tr>
-                <tr>
-                    <td className={tdStyle}>5-я</td>
-                    {days.map(day =>
-                        <td className={tdStyle}>
-                            <ScheduleCell evenWeek = {true} day = {day} lesson = {5} criteria = "group"
-                                condition = "gr1"
-                            />
-                        </td>
-                        )}
-                </tr>
+                    </tr>
+                )}
             </tbody>
         </table>
+        </>
     )
 }
 
 
-async function ScheduleCell ({evenWeek, day, lesson, criteria, condition}:
-    {evenWeek: boolean, day: string, lesson: number, criteria: string, condition: string}
-    ) {
-    
-    let lessons: null | Schedule = null
-
-    const where_ = {
-        AND: [
-            {evenWeek: evenWeek},
-            {day: day},
-            {lesson: lesson},
-            {groupId: condition}
-        ]
-    }
-
-    lessons = await db.schedule.findMany({
-            where: where_,
-            include: {
-                discipline: true
-            }
-        })
-
-    // switch (criteria) {
-    //     case "group": { lessons = await db.schedule.findMany({
-    //         where: where_
-    //     })}; break
-
-    //     default: { lessons = await db.schedule.findMany({
-    //         where: where_
-    //     })}; break
-    // }
+function ScheduleCell ({lessons, forWho} : {lessons: Schedule[], forWho: string}) {
 
     if (lessons.length == 0) {
+        return (<>-</>)
+    }
+
+    if (forWho == "group") {
         return (
-            <Link href={`/schedule/new`}>
-                    <PlusIcon className="w-4" />
-            </Link>
+            <>
+                {lessons.map(l => 
+                    <div key = {l.id}>
+                        <p>{l.lessontype}. {l.discipline.name}</p>
+                        <p>{l.teacher.surname + " " + l.teacher.name.substring(0,1) + ". " + l.teacher.fathername.substring(0,1) + "."} a. {l.classroom.name} {l.subgroup && <>{l.subgroup} пг</>}</p>
+                    </div>
+                )}
+            </>
         )
     }
 
+    if (forWho == "teacher") {
+        const lessontype = lessons[0]?.lessontype
+        let group = lessons[0]?.group.name
+        let subgroup
+
+        if (lessontype == "лек") {
+            for (let i = 1; i < lessons.length; i++) {
+                group = group + ", " + lessons[i]?.group.name
+            }
+
+            subgroup = ""
+        }
+        else {
+            subgroup = lessons[0]?.subgroup? lessons[0]?.subgroup + " пг" : ""
+        }
+
+        return (
+            <>
+                <p>{lessons[0]?.discipline.name}</p>
+                <p>{group} {subgroup} а. {lessons[0]?.classroom.name}</p>
+            </>
+        )
+    }
+
+
+    if (forWho == "classroom") {
+        const lessontype = lessons[0]?.lessontype
+        let group = lessons[0]?.group.name
+        let subgroup
+
+        if (lessontype == "лек") {
+            for (let i = 1; i < lessons.length; i++) {
+                group = group + ", " + lessons[i]?.group.name
+            }
+
+            subgroup = ""
+        }
+        else {
+            subgroup = lessons[0]?.subgroup? lessons[0]?.subgroup + " пг" : ""
+        }
+
+        return (
+            <>
+                <p>{lessons[0]?.discipline.name}</p>
+                <p>{lessons[0]?.teacher.surname + " " + lessons[0]?.teacher.name.substring(0,1) + ". " + lessons[0]?.teacher.fathername.substring(0,1) + "."}; {group} {subgroup}</p>
+            </>
+        )
+    }
+    
     return (
-        // <>{JSON.stringify(lessons)}
-        <div className="flex">
-           <label> Допустим, занятие</label>
-            <Link href={`/schedule/${lessons[0].id}`}>
-                <PencilSquareIcon className="w-4 mt-1 ml-1" />
-            </Link>
-        </div>
-        // </>
+        <>???</>
     )
 }
 

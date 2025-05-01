@@ -121,6 +121,12 @@ const teachers = [
         email: null
     },
     {
+        surname: "Каштанов",
+        name: "Алексей",
+        fathername: "Леонидович",
+        email: null
+    },
+    {
         surname: "Кораблёв",
         name: "Владимир",
         fathername: "Николаевич",
@@ -543,6 +549,32 @@ const specialtyDiscs = [
         speciality: "Бизнес-информатика",
         discipline: "Статистика"
     },
+    
+
+    {
+        speciality: "Информационные системы и технологии",
+        discipline: "Инженерия информационных систем"
+    },
+    {
+        speciality: "Информационные системы и технологии",
+        discipline: "Инфокоммуникационные системы и сети"
+    },
+    {
+        speciality: "Информационные системы и технологии",
+        discipline: "Компьютерные комплексы и сети"
+    },
+    {
+        speciality: "Информационные системы и технологии",
+        discipline: "Прикладное программирование"
+    },
+    {
+        speciality: "Информационные системы и технологии",
+        discipline: "Тестирование программных продуктов"
+    },
+    {
+        speciality: "Информационные системы и технологии",
+        discipline: "Физическая культура и спорт"
+    },
 ]
 
 const classrooms = [
@@ -817,234 +849,567 @@ const academicPlan = [
 ]
 
 
+const schedules = [
+    {
+        evenWeek: false,
+        day: 1,
+        lesson: 1,
+        lessontype: "пр",
+        group: "22з",
+        subgroup: 1,
+        discipline: "Прикладное программирование",
+        teacher: "Альтман",
+        classroom: "1-330"
+    },
+    {
+        evenWeek: false,
+        day: 1,
+        lesson: 1,
+        lessontype: "лаб",
+        group: "22з",
+        subgroup: 2,
+        discipline: "Инфокоммуникационные системы и сети",
+        teacher: "Окишев",
+        classroom: "1-325"
+    },
+    {
+        evenWeek: false,
+        day: 1,
+        lesson: 2,
+        lessontype: "лаб",
+        group: "22з",
+        subgroup: 2,
+        discipline: "Инфокоммуникационные системы и сети",
+        teacher: "Окишев",
+        classroom: "1-325"
+    },
+    {
+        evenWeek: false,
+        day: 1,
+        lesson: 2,
+        lessontype: "лаб",
+        group: "22з",
+        subgroup: 1,
+        discipline: "Компьютерные комплексы и сети",
+        teacher: "Малютин",
+        classroom: "1-330"
+    },
+    {
+        evenWeek: false,
+        day: 1,
+        lesson: 3,
+        lessontype: "лаб",
+        group: "22з",
+        subgroup: 1,
+        discipline: "Инфокоммуникационные системы и сети",
+        teacher: "Окишев",
+        classroom: "1-325"
+    },
+    {
+        evenWeek: false,
+        day: 1,
+        lesson: 3,
+        lessontype: "лаб",
+        group: "22з",
+        subgroup: 2,
+        discipline: "Инженерия информационных систем",
+        teacher: "Каштанов",
+        classroom: "1-467"
+    },
+    {
+        evenWeek: false,
+        day: 1,
+        lesson: 4,
+        lessontype: "лаб",
+        group: "22з",
+        subgroup: 2,
+        discipline: "Инфокоммуникационные системы и сети",
+        teacher: "Окишев",
+        classroom: "1-325"
+    },
+
+
+    
+    {
+        evenWeek: false,
+        day: 2,
+        lesson: 2,
+        lessontype: "лек",
+        group: "22з",
+        subgroup: null,
+        discipline: "Тестирование программных продуктов",
+        teacher: "Елизаров",
+        classroom: "1-471"
+    },
+    {
+        evenWeek: false,
+        day: 2,
+        lesson: 2,
+        lessontype: "лек",
+        group: "22м",
+        subgroup: null,
+        discipline: "Тестирование программных продуктов",
+        teacher: "Елизаров",
+        classroom: "1-471"
+    },
+    {
+        evenWeek: false,
+        day: 2,
+        lesson: 3,
+        lessontype: "лек",
+        group: "22з",
+        subgroup: null,
+        discipline: "Компьютерные комплексы и сети",
+        teacher: "Малютин",
+        classroom: "1-471"
+    },
+    {
+        evenWeek: false,
+        day: 2,
+        lesson: 3,
+        lessontype: "лек",
+        group: "22м",
+        subgroup: null,
+        discipline: "Компьютерные комплексы и сети",
+        teacher: "Малютин",
+        classroom: "1-471"
+    },
+    {
+        evenWeek: false,
+        day: 2,
+        lesson: 4,
+        lessontype: "лаб",
+        group: "22з",
+        subgroup: 1,
+        discipline: "Компьютерные комплексы и сети",
+        teacher: "Малютин",
+        classroom: "1-467"
+    },
+
+
+    
+    {
+        evenWeek: false,
+        day: 3,
+        lesson: 3,
+        lessontype: "лаб",
+        group: "22з",
+        subgroup: null,
+        discipline: "Тестирование программных продуктов",
+        teacher: "Елизаров",
+        classroom: "1-471"
+    },
+    {
+        evenWeek: false,
+        day: 3,
+        lesson: 4,
+        lessontype: "лаб",
+        group: "22з",
+        subgroup: null,
+        discipline: "Тестирование программных продуктов",
+        teacher: "Елизаров",
+        classroom: "1-471"
+    },
+
+ 
+
+    {
+        evenWeek: false,
+        day: 4,
+        lesson: 2,
+        lessontype: "лаб",
+        group: "22з",
+        subgroup: null,
+        discipline: "Инфокоммуникационные системы и сети",
+        teacher: "Окишев",
+        classroom: "1-330"
+    },
+    {
+        evenWeek: false,
+        day: 4,
+        lesson: 2,
+        lessontype: "лаб",
+        group: "22м",
+        subgroup: null,
+        discipline: "Инфокоммуникационные системы и сети",
+        teacher: "Окишев",
+        classroom: "1-330"
+    },
+
+
+    
+    {
+        evenWeek: false,
+        day: 6,
+        lesson: 2,
+        lessontype: "лаб",
+        group: "22з",
+        subgroup: 1,
+        discipline: "Инженерия информационных систем",
+        teacher: "Каштанов",
+        classroom: "1-467"
+    },
+    {
+        evenWeek: false,
+        day: 6,
+        lesson: 2,
+        lessontype: "пр",
+        group: "22з",
+        subgroup: 2,
+        discipline: "Прикладное программирование",
+        teacher: "Альтман",
+        classroom: "1-322"
+    },
+
+
+
+    
+    {
+        evenWeek: true,
+        day: 1,
+        lesson: 2,
+        lessontype: "лаб",
+        group: "22з",
+        subgroup: 1,
+        discipline: "Инфокоммуникационные системы и сети",
+        teacher: "Окишев",
+        classroom: "1-325"
+    },
+    {
+        evenWeek: true,
+        day: 1,
+        lesson: 3,
+        lessontype: "кпр",
+        group: "22з",
+        subgroup: null,
+        discipline: "Инфокоммуникационные системы и сети",
+        teacher: "Окишев",
+        classroom: "1-325"
+    },
+    {
+        evenWeek: true,
+        day: 1,
+        lesson: 4,
+        lessontype: "кср",
+        group: "22з",
+        subgroup: null,
+        discipline: "Инфокоммуникационные системы и сети",
+        teacher: "Окишев",
+        classroom: "1-325"
+    },
+
+    
+
+    {
+        evenWeek: true,
+        day: 2,
+        lesson: 2,
+        lessontype: "лаб",
+        group: "22з",
+        subgroup: 1,
+        discipline: "Компьютерные комплексы и сети",
+        teacher: "Малютин",
+        classroom: "1-330"
+    },
+
+
+
+    {
+        evenWeek: true,
+        day: 2,
+        lesson: 3,
+        lessontype: "лек",
+        group: "22з",
+        subgroup: null,
+        discipline: "Компьютерные комплексы и сети",
+        teacher: "Малютин",
+        classroom: "1-330"
+    },
+    {
+        evenWeek: true,
+        day: 2,
+        lesson: 3,
+        lessontype: "лек",
+        group: "22м",
+        subgroup: null,
+        discipline: "Компьютерные комплексы и сети",
+        teacher: "Малютин",
+        classroom: "1-330"
+    },
+]
+
+
 async function main() {
-    await prisma.academicPlan.deleteMany()
-    await prisma.specialityDisc.deleteMany()
-    await prisma.teacherDiscipline.deleteMany()
-    await prisma.teacher.deleteMany()
-    await prisma.user.deleteMany()
-    await prisma.discipline.deleteMany()
-    await prisma.group.deleteMany()
-    await prisma.speciality.deleteMany()
-    await prisma.classroom.deleteMany()
+    await prisma.schedule.deleteMany()
+    // await prisma.academicPlan.deleteMany()
+    // await prisma.specialityDisc.deleteMany()
+    // await prisma.teacherDiscipline.deleteMany()
+    // await prisma.teacher.deleteMany()
+    // await prisma.user.deleteMany()
+    // await prisma.discipline.deleteMany()
+    // await prisma.group.deleteMany()
+    // await prisma.speciality.deleteMany()
+    // await prisma.classroom.deleteMany()
 
-    await Promise.all(
-        users.map(async (user) => {
-            await prisma.user.create({
-                data: {
-                    email: user.email,
-                    role: user.role as Role,
-                    name: user.name
-                }
-            })
-        })
-    )
+    // await Promise.all(
+    //     users.map(async (user) => {
+    //         await prisma.user.create({
+    //             data: {
+    //                 email: user.email,
+    //                 role: user.role as Role,
+    //                 name: user.name
+    //             }
+    //         })
+    //     })
+    // )
 
-    await Promise.all(
-        teachers.map(async (teacher) => {
+    // await Promise.all(
+    //     teachers.map(async (teacher) => {
 
-            const user = await prisma.user.findUnique({
-                where: {
-                    email: teacher.email || ""
-                }
-            })
+    //         const user = await prisma.user.findUnique({
+    //             where: {
+    //                 email: teacher.email || ""
+    //             }
+    //         })
 
-            await prisma.teacher.create({
-                data: {
-                    surname: teacher.surname,
-                    name: teacher.name,
-                    fathername: teacher.fathername,
-                    userId: user?.id
-                }
-            })
-        })
-    )
+    //         await prisma.teacher.create({
+    //             data: {
+    //                 surname: teacher.surname,
+    //                 name: teacher.name,
+    //                 fathername: teacher.fathername,
+    //                 userId: user?.id
+    //             }
+    //         })
+    //     })
+    // )
 
-    await Promise.all(
-        disciplines.map(async (discipline) => {
-            await prisma.discipline.create({
-                data: discipline
-            })
-        })
-    )
+    // await Promise.all(
+    //     disciplines.map(async (discipline) => {
+    //         await prisma.discipline.create({
+    //             data: discipline
+    //         })
+    //     })
+    // )
 
-    await Promise.all(
-        specialities.map(async (speciality) => {
-            await prisma.speciality.create({
-                data: speciality
-            })
-        })
-    )
+    // await Promise.all(
+    //     specialities.map(async (speciality) => {
+    //         await prisma.speciality.create({
+    //             data: speciality
+    //         })
+    //     })
+    // )
 
-    await Promise.all(
-        specialtyDiscs.map(async (sd) => {
-            const specialityId = await prisma.speciality.findFirstOrThrow(
-                {
-                    where: {name: sd.speciality},
-                    select: {id: true}
-                }
-            )
+    // await Promise.all(
+    //     specialtyDiscs.map(async (sd) => {
+    //         const specialityId = await prisma.speciality.findFirstOrThrow(
+    //             {
+    //                 where: {name: sd.speciality},
+    //                 select: {id: true}
+    //             }
+    //         )
 
-            const disciplineId = await prisma.discipline.findFirstOrThrow(
-                {
-                    where: {name: sd.discipline},
-                    select: {id: true}
-                }
-            )
+    //         const disciplineId = await prisma.discipline.findFirstOrThrow(
+    //             {
+    //                 where: {name: sd.discipline},
+    //                 select: {id: true}
+    //             }
+    //         )
 
-            await prisma.specialityDisc.create({
-                data: {
-                    specialityId: specialityId.id,
-                    disciplineId: disciplineId.id
-                }
-            })
-        })
-    )
+    //         await prisma.specialityDisc.create({
+    //             data: {
+    //                 specialityId: specialityId.id,
+    //                 disciplineId: disciplineId.id
+    //             }
+    //         })
+    //     })
+    // )
 
-    await Promise.all(
-        classrooms.map(async (classroom) => {
-            await prisma.classroom.create({
-                data: classroom
-            })
-        })
-    )
+    // await Promise.all(
+    //     classrooms.map(async (classroom) => {
+    //         await prisma.classroom.create({
+    //             data: classroom
+    //         })
+    //     })
+    // )
 
-    await Promise.all(
-        groups.map(async (g) => {
-            const specialityId = await prisma.speciality.findFirstOrThrow(
-                {
-                    where: {name: g.speciality},
-                    select: {id: true}
-                }
-            )
+    // await Promise.all(
+    //     groups.map(async (g) => {
+    //         const specialityId = await prisma.speciality.findFirstOrThrow(
+    //             {
+    //                 where: {name: g.speciality},
+    //                 select: {id: true}
+    //             }
+    //         )
 
-            await prisma.group.create({
-                data: {
-                    name: g.name,
-                    year: g.year,
-                    students: g.students,
-                    specialityId: specialityId.id
-                }
-            })
-        })
-    )
+    //         await prisma.group.create({
+    //             data: {
+    //                 name: g.name,
+    //                 year: g.year,
+    //                 students: g.students,
+    //                 specialityId: specialityId.id
+    //             }
+    //         })
+    //     })
+    // )
 
-    await Promise.all(
-        teacherDiscs.map(async (td) => {
-            const teacherId = await prisma.teacher.findFirstOrThrow(
-                {
-                    where: {surname: td.teacher},
-                    select: {id: true}
-                }
-            )
+    // await Promise.all(
+    //     teacherDiscs.map(async (td) => {
+    //         const teacherId = await prisma.teacher.findFirstOrThrow(
+    //             {
+    //                 where: {surname: td.teacher},
+    //                 select: {id: true}
+    //             }
+    //         )
 
-            const disciplineId = await prisma.discipline.findFirstOrThrow(
-                {
-                    where: {name: td.discipline},
-                    select: {id: true}
-                }
-            )
+    //         const disciplineId = await prisma.discipline.findFirstOrThrow(
+    //             {
+    //                 where: {name: td.discipline},
+    //                 select: {id: true}
+    //             }
+    //         )
 
-            await prisma.teacherDiscipline.create({
-                data: {
-                    teacherId: teacherId.id,
-                    disciplineId: disciplineId.id,
-                    lectures: td.lectures,
-                    subgroup: td.subgroup
-                }
-            })
-        })
-    )
+    //         await prisma.teacherDiscipline.create({
+    //             data: {
+    //                 teacherId: teacherId.id,
+    //                 disciplineId: disciplineId.id,
+    //                 lectures: td.lectures,
+    //                 subgroup: td.subgroup
+    //             }
+    //         })
+    //     })
+    // )
 
-    const allSD = await prisma.specialityDisc.findMany({
-        include: {
-            speciality: true,
-            discipline: true
-        }
-    })
+    // const allSD = await prisma.specialityDisc.findMany({
+    //     include: {
+    //         speciality: true,
+    //         discipline: true
+    //     }
+    // })
 
 
-    // console.log(allSD, "\n\n\n")
+    // // console.log(allSD, "\n\n\n")
 
-    await Promise.all(
-        academicPlan.map(async (plan) => {
+    // await Promise.all(
+    //     academicPlan.map(async (plan) => {
 
-            // console.log("\n\n'", plan.discipline, "' ", plan.speciality)
+    //         console.log("\n\n'", plan.discipline.trim(), "' '", plan.speciality, "'")
 
-            // const specDisc = await prisma.specialityDisc.findFirstOrThrow({
-            //     include: {
-            //         speciality: true,
-            //         discipline: true
-            //     },
-            //     where: {
-            //             AND: [
-            //                 {speciality: {code: plan.speciality.toString()}},
-            //                 {discipline: {name: plan.discipline.toString()}},
-            //             ]
-            //         },
-            //     }
-            // )
+    //         const specDisc = await prisma.specialityDisc.findFirstOrThrow({
+    //             include: {
+    //                 speciality: true,
+    //                 discipline: true
+    //             },
+    //             where: {
+    //                     AND: [
+    //                         {speciality: {code: plan.speciality.trim()}},
+    //                         {discipline: {name: plan.discipline.trim()}},
+    //                     ]
+    //                 },
+    //             }
+    //         )
 
-            // const specDisc = allSD.find(sd => sd.speciality.code.toString() === plan.speciality.toString())
-            // const specDisc = allSD.map(sd => {
+    //         // const specDisc = allSD.find(sd => sd.speciality.code.toString() === plan.speciality.toString())
+    //         // const specDisc = allSD.map(sd => {
                 
-            // })
+    //         // })
 
-            // const spec = await prisma.specialityDisc.findFirst({
-            //     include: {
-            //         speciality: true,
-            //         discipline: true
-            //     },
-            //     where: {discipline: {name: plan.discipline}}
-            // }
-            // )
+    //         // const spec = await prisma.specialityDisc.findFirst({
+    //         //     include: {
+    //         //         speciality: true,
+    //         //         discipline: true
+    //         //     },
+    //         //     where: {discipline: {name: plan.discipline}}
+    //         // }
+    //         // )
 
-            // const disc = await prisma.specialityDisc.findFirst({
-            //     include: {
-            //         speciality: true,
-            //         discipline: true
-            //     },
-            //     where: {speciality: {name: plan.speciality}}
-            // }
-            // )
+    //         // const disc = await prisma.specialityDisc.findFirst({
+    //         //     include: {
+    //         //         speciality: true,
+    //         //         discipline: true
+    //         //     },
+    //         //     where: {speciality: {name: plan.speciality}}
+    //         // }
+    //         // )
 
-            // const specDisc = allSD.find(sd => ( sd.discipline.name == plan.discipline))
+    //         // const specDisc = allSD.find(sd => ( sd.discipline.name == plan.discipline))
 
-            // const speciality = await prisma.speciality.findFirstOrThrow({
-            //     where: {name: plan.speciality}
-            // })
-            // const discipline = await prisma.discipline.findFirstOrThrow({
-            //     where: {name: plan.discipline}
-            // })
+    //         // const speciality = await prisma.speciality.findFirstOrThrow({
+    //         //     where: {name: plan.speciality}
+    //         // })
+    //         // const discipline = await prisma.discipline.findFirstOrThrow({
+    //         //     where: {name: plan.discipline}
+    //         // })
 
-            // console.log("\n", plan.discipline, " : ", discipline, ", ", speciality, "\n")
+    //         // console.log("\n", plan.discipline, " : ", discipline, ", ", speciality, "\n")
 
-            // const specDisc = await prisma.specialityDisc.findFirstOrThrow(
-            //     {where: {
-            //             AND: [
-            //                 {specialityId: speciality.id},
-            //                 {disciplineId: discipline.id},
-            //             ]
-            //         },
-            //     }
-            // )
+    //         // const specDisc = await prisma.specialityDisc.findFirstOrThrow(
+    //         //     {where: {
+    //         //             AND: [
+    //         //                 {specialityId: speciality.id},
+    //         //                 {disciplineId: discipline.id},
+    //         //             ]
+    //         //         },
+    //         //     }
+    //         // )
 
-            // console.log("\n", plan.discipline, " : ", specDisc, "\n\n")
+    //         console.log("\n", plan.discipline, " : ", specDisc, "\n\n")
 
-            // await prisma.academicPlan.create({
-            //     data: {
-            //         specDiscId: specDisc.id,
-            //         semester: plan.semester,
-            //         lectures: plan.lectures,
-            //         practise: plan.practise,
-            //         labs: plan.labs,
-            //         ksr: plan.ksr,
-            //         coursework: plan.coursework,
-            //         exam: plan.exam
-            //     }
-            // })
+    //         await prisma.academicPlan.create({
+    //             data: {
+    //                 specDiscId: specDisc.id,
+    //                 semester: plan.semester,
+    //                 lectures: plan.lectures,
+    //                 practise: plan.practise,
+    //                 labs: plan.labs,
+    //                 ksr: plan.ksr,
+    //                 coursework: plan.coursework,
+    //                 exam: plan.exam
+    //             }
+    //         })
+    //     })
+    // )
+
+    await Promise.all(
+        schedules.map(async (schedule) => {
+            const groupId = await prisma.group.findFirstOrThrow({
+                where: {name: schedule.group},
+                select: { id: true}
+            })
+            
+            const disciplineId = await prisma.discipline.findFirstOrThrow({
+                where: {name: schedule.discipline},
+                select: { id: true}
+            })
+            
+            const teacherId = await prisma.teacher.findFirstOrThrow({
+                where: {surname: schedule.teacher},
+                select: { id: true}
+            })
+            
+            const classroomId = await prisma.classroom.findFirstOrThrow({
+                where: {name: schedule.classroom},
+                select: { id: true}
+            })
+
+
+            await prisma.schedule.create({
+                data: {
+                    evenWeek: schedule.evenWeek,
+                    day: schedule.day,
+                    lesson: schedule.lesson,
+                    lessontype: schedule.lessontype,
+                    groupId: groupId.id,
+                    subgroup: schedule.subgroup,
+                    disciplineId: disciplineId.id,
+                    teacherId: teacherId.id,
+                    classroomID: classroomId.id
+                }
+            })
         })
-    )
+    ) 
+
+
+
 }
 
 main()

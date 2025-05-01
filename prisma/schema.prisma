@@ -185,14 +185,14 @@ model Classroom {
 model Schedule {
     id       String @id @default(cuid())
     evenWeek Boolean @default(false)
-    day      String
+    day      Int
     lesson   Int
-
-    subgroup Int?
     lessontype String
 
     group Group @relation(fields: [groupId], references: [id])
     groupId String
+
+    subgroup Int?
 
     discipline Discipline @relation(fields: [disciplineId], references: [id])
     disciplineId String
