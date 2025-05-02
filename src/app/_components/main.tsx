@@ -1,16 +1,17 @@
 import { auth } from "~/server/auth"
 import {HydrateClient} from "~/trpc/server"
 import {Navbar} from "./navbar"
+import { getRole } from "~/app/api/auth/check"
 
 export async function MyApp ({
     children
 }: Readonly<{children: React.ReactNode}>) {
-    const session = await auth()
+    const role = (await getRole())
 
     return (
         <HydrateClient>
             <header>
-                {session && <Navbar role = {session?.user.role ?? "STUDENT"}/>}
+                <Navbar role = {role}/>
             </header>
             <main>
                 {children}

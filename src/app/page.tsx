@@ -1,11 +1,12 @@
 import { auth } from "~/server/auth";
-import { SigninLink } from "./_components/signlink"
+import { SigninLink } from "./_components/homepage/signlink"
 import React from "react";
 import Link from "next/link"
 import { updateButtonStyle } from "~/styles/daisystyles"
 import { db } from "~/server/db"
 import { getRole } from "./api/auth/check"
 import { User } from "@prisma/client";
+import { ForGuest, ForUser } from "./_components/homepage/rolesDescription";
 
 
 export default async function Home() {
@@ -18,13 +19,13 @@ export default async function Home() {
 
   return (
     <div className = "pl-4 pt-4">
-      {!user ? <SigninLink />
+      {!user ? <ForGuest />
       :
       <div>
         {
           user?.name ? <p>Здравствуйте, {user.name}!</p> : <p>Здравствуйте!</p>
         }
-        <p>Вы зашли как {user.role}</p>
+          <ForUser role = {user.role} />
         <Link href = "/api/auth/signout" className = {"btn ml-8" + updateButtonStyle}>
           Выйти
         </Link>

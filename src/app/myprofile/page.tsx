@@ -9,7 +9,7 @@ export default async function Page () {
 
     if (!userId) {
         return (
-            <main><h1>401 Unauthorized</h1></main>
+            <main><div className="m-4"><h1 className = "mb-4 font-bold">401 Unauthorized</h1></div></main>
         )
     }
 

@@ -89,10 +89,8 @@ export async function UserInfoMODE ({user} : {user: User}) {
 export function UserInfo ({user} : {user: User}) {
     return (
       <div>
-        <div className="m-4">
         <h1 className = "mb-4 font-bold">403 forbidden</h1>
             Вам тут делать нечего.
-        </div>
       </div>
     )
 }

@@ -1,9 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { getRole } from "~/app/api/auth/check"
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import React, {useEffect} from "react"
+import React from "react"
 import { usePathname } from 'next/navigation'
 
 export function Navbar (
@@ -18,19 +16,19 @@ export function Navbar (
     return (
         <div className = "navbar bg-gray-100">
             <Link href = "/" onClick={()=> setCurrentPage("/")}
-                className = {currentPage == "/" ? currentPageButton : emptyPage}
-            >
+                className = {currentPage == "/" ? currentPageButton : navbarButton}>
                 Домой
             </Link>
 
+            {role != "GUEST" &&
             <Link href = "/myprofile" onClick={()=> setCurrentPage("/myprofile")}
-                className = {currentPage == "/myprofile" ? currentPageButton : navbarButton}
-            >
+                className = {currentPage == "/myprofile" ? currentPageButton : navbarButton}>
                 Мой профиль
             </Link>
+            }
 
             <Link href = "/schedule" onClick={()=> setCurrentPage("/schedule")}
-                className = {currentPage == "/schedule" ? currentPageButton : navbarButton}
+                className = {currentPage == "/schedule" ? currentPageButton : emptyPage}
             >
                 Расписание
             </Link>
