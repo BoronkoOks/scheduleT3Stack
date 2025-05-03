@@ -1,11 +1,10 @@
 import { HydrateClient } from "~/trpc/server"
 import {pageHeaderStyle} from "~/styles/daisystyles"
-import ScheduleTable from "~/app/_components/schedule/scheduleTable"
-import SearchInput from "~/app/ui/searchInput"
-import { getRole } from "~/app/api/auth/check"
-import SearchPanel from "../_components/schedule/searchPanel"
+import { getRole, isAdmin, isAdminOrCurrentUser } from "~/app/api/auth/check"
+import SearchPanel from "~/app/_components/schedule/searchPanel"
 import { db } from "~/server/db"
 import { Schedule } from "@prisma/client"
+import ScheduleDropdown from "~/app/_components/schedule/scheduleDropdown"
 
 
 export default async function Home(props:
@@ -123,6 +122,16 @@ export default async function Home(props:
       default: ; break;
     }
   }
+  
+  
+  let edit = false
+
+  if (searchBy == "teacher" && selected != "") {
+    edit = await isAdminOrCurrentUser(selected)
+  }
+  else {
+    edit = await isAdmin()
+  }
 
 
   return (
@@ -130,28 +139,16 @@ export default async function Home(props:
       <main>
         <h2 className = {pageHeaderStyle}>Расписание</h2>
         <div className = "mt-4 mb-6">
-          <SearchPanel searchByList = {results} />
+          <SearchPanel searchByList = {results} edit = {edit}/>
         </div>
-        <div  className = "mt-4 mb-6 ml-2">
-          <div className = "border-2 border-gray-500 rounded-lg pl-2">
-            <details className = "collapse" tabIndex={0}>
-                <summary className = "collapse-title">
-                  <b>Нечётная неделя</b>
-                </summary>
-              <div className = "mb-4 mx-4">
-                <ScheduleTable schedule = {lessons.filter(l => l.evenWeek == false)} forWho = {searchBy} />
-              </div>
-            </details>
+        <div className = "mt-4 mb-6 ml-2 mr-2">
+          <div className="mb-2">
+            <ScheduleDropdown summary = "Нечётная неделя" edit = {false}
+              schedule = {lessons.filter(l => l.evenWeek == false)} forWho = {searchBy} />
           </div>
-          <div className = "border-2 border-gray-500 rounded-lg pl-2 mt-2">
-            <details className = "collapse" tabIndex={0}>
-                <summary className = "collapse-title">
-                  <b>Чётная неделя</b>
-                </summary>
-              <div className = "mb-4 mx-4">
-                <ScheduleTable schedule = {lessons.filter(l => l.evenWeek == true)} forWho = {searchBy} />
-              </div>
-            </details>
+          <div>
+            <ScheduleDropdown summary = "Чётная неделя" edit = {false}
+              schedule = {lessons.filter(l => l.evenWeek == true)} forWho = {searchBy} />
           </div>
         </div>
       </main>

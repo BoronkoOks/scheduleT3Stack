@@ -13,7 +13,7 @@ export async function MyApp ({
             <header>
                 <Navbar role = {role}/>
             </header>
-            <main>
+            <main className="bg-gray-100">
                 {children}
             </main>
         </HydrateClient>

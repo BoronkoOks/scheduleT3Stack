@@ -27,19 +27,18 @@ export function Navbar (
             </Link>
             }
 
+            {role == "ADMIN" &&
+            <Link href = "/user" onClick={()=> setCurrentPage("/user")}
+                className = {currentPage == "/user" ? currentPageButton : navbarButton}>
+                Пользователи
+            </Link>
+            }
+
             <Link href = "/schedule" onClick={()=> setCurrentPage("/schedule")}
                 className = {currentPage == "/schedule" ? currentPageButton : emptyPage}
             >
                 Расписание
             </Link>
-
-            {role == "ADMIN" &&
-            <Link href = "/user" onClick={()=> setCurrentPage("/user")}
-                className = {currentPage == "/user" ? currentPageButton : navbarButton}
-            >
-                Пользователи
-            </Link>
-            }
             
             <Link href = "/teacher" onClick={()=> setCurrentPage("/teacher")}
                 className = {currentPage == "/teacher" ? currentPageButton : navbarButton}

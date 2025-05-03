@@ -127,6 +127,12 @@ const teachers = [
         email: null
     },
     {
+        surname: "Кокшаров",
+        name: "Андрей",
+        fathername: "Валериевич",
+        email: null
+    },
+    {
         surname: "Кораблёв",
         name: "Владимир",
         fathername: "Николаевич",
@@ -850,6 +856,8 @@ const academicPlan = [
 
 
 const schedules = [
+    // Нечётная неделя
+    // Понедельник
     {
         evenWeek: false,
         day: 1,
@@ -930,6 +938,7 @@ const schedules = [
 
 
     
+    // Вторник
     {
         evenWeek: false,
         day: 2,
@@ -988,6 +997,7 @@ const schedules = [
 
 
     
+    // Среда
     {
         evenWeek: false,
         day: 3,
@@ -1013,11 +1023,12 @@ const schedules = [
 
  
 
+    // Четверг
     {
         evenWeek: false,
         day: 4,
         lesson: 2,
-        lessontype: "лаб",
+        lessontype: "лек",
         group: "22з",
         subgroup: null,
         discipline: "Инфокоммуникационные системы и сети",
@@ -1028,7 +1039,7 @@ const schedules = [
         evenWeek: false,
         day: 4,
         lesson: 2,
-        lessontype: "лаб",
+        lessontype: "лек",
         group: "22м",
         subgroup: null,
         discipline: "Инфокоммуникационные системы и сети",
@@ -1038,6 +1049,7 @@ const schedules = [
 
 
     
+    // Суббота
     {
         evenWeek: false,
         day: 6,
@@ -1063,7 +1075,8 @@ const schedules = [
 
 
 
-    
+    // Чётная неделя
+    // Понедельник
     {
         evenWeek: true,
         day: 1,
@@ -1100,6 +1113,7 @@ const schedules = [
 
     
 
+    // Вторник
     {
         evenWeek: true,
         day: 2,
@@ -1111,9 +1125,6 @@ const schedules = [
         teacher: "Малютин",
         classroom: "1-330"
     },
-
-
-
     {
         evenWeek: true,
         day: 2,
@@ -1135,6 +1146,205 @@ const schedules = [
         discipline: "Компьютерные комплексы и сети",
         teacher: "Малютин",
         classroom: "1-330"
+    },
+
+
+    
+    // Среда
+    {
+        evenWeek: true,
+        day: 3,
+        lesson: 2,
+        lessontype: "лек",
+        group: "22з",
+        subgroup: null,
+        discipline: "Тестирование программных продуктов",
+        teacher: "Елизаров",
+        classroom: "1-471"
+    },
+    {
+        evenWeek: true,
+        day: 3,
+        lesson: 2,
+        lessontype: "лек",
+        group: "22м",
+        subgroup: null,
+        discipline: "Тестирование программных продуктов",
+        teacher: "Елизаров",
+        classroom: "1-471"
+    },
+    {
+        evenWeek: true,
+        day: 3,
+        lesson: 3,
+        lessontype: "лаб",
+        group: "22з",
+        subgroup: null,
+        discipline: "Тестирование программных продуктов",
+        teacher: "Елизаров",
+        classroom: "1-467"
+    },
+    {
+        evenWeek: true,
+        day: 3,
+        lesson: 4,
+        lessontype: "пр",
+        group: "22з",
+        subgroup: 1,
+        discipline: "Прикладное программирование",
+        teacher: "Альтман",
+        classroom: "1-322"
+    },
+    {
+        evenWeek: true,
+        day: 3,
+        lesson: 4,
+        lessontype: "лаб",
+        group: "22з",
+        subgroup: 2,
+        discipline: "Инженерия информационных систем",
+        teacher: "Каштанов",
+        classroom: "1-467"
+    },
+    {
+        evenWeek: true,
+        day: 3,
+        lesson: 5,
+        lessontype: "лаб",
+        group: "22з",
+        subgroup: 2,
+        discipline: "Компьютерные комплексы и сети",
+        teacher: "Малютин",
+        classroom: "1-322"
+    },
+
+
+    
+    // Четверг
+    {
+        evenWeek: true,
+        day: 4,
+        lesson: 1,
+        lessontype: "лаб",
+        group: "22з",
+        subgroup: null,
+        discipline: "Физическая культура и спорт",
+        teacher: "Кокшаров",
+        classroom: "1-160"
+    },
+    {
+        evenWeek: true,
+        day: 4,
+        lesson: 1,
+        lessontype: "лаб",
+        group: "22м",
+        subgroup: null,
+        discipline: "Физическая культура и спорт",
+        teacher: "Кокшаров",
+        classroom: "1-160"
+    },
+    {
+        evenWeek: true,
+        day: 4,
+        lesson: 1,
+        lessontype: "лаб",
+        group: "22ф",
+        subgroup: null,
+        discipline: "Физическая культура и спорт",
+        teacher: "Кокшаров",
+        classroom: "1-160"
+    },
+    {
+        evenWeek: true,
+        day: 4,
+        lesson: 2,
+        lessontype: "лек",
+        group: "22з",
+        subgroup: null,
+        discipline: "Инфокоммуникационные системы и сети",
+        teacher: "Окишев",
+        classroom: "1-330"
+    },
+    {
+        evenWeek: true,
+        day: 4,
+        lesson: 2,
+        lessontype: "лек",
+        group: "22м",
+        subgroup: null,
+        discipline: "Инфокоммуникационные системы и сети",
+        teacher: "Окишев",
+        classroom: "1-330"
+    },
+    {
+        evenWeek: true,
+        day: 4,
+        lesson: 3,
+        lessontype: "лаб",
+        group: "22з",
+        subgroup: 2,
+        discipline: "Инфокоммуникационные системы и сети",
+        teacher: "Окишев",
+        classroom: "1-325"
+    },
+    {
+        evenWeek: true,
+        day: 4,
+        lesson: 3,
+        lessontype: "лаб",
+        group: "22з",
+        subgroup: 1,
+        discipline: "Инженерия информационных систем",
+        teacher: "Каштанов",
+        classroom: "1-467"
+    },
+    {
+        evenWeek: true,
+        day: 4,
+        lesson: 4,
+        lessontype: "пр",
+        group: "22з",
+        subgroup: 2,
+        discipline: "Прикладное программирование",
+        teacher: "Альтман",
+        classroom: "1-322"
+    },
+
+
+
+    // Пятница
+    {
+        evenWeek: true,
+        day: 5,
+        lesson: 2,
+        lessontype: "кср",
+        group: "22з",
+        subgroup: null,
+        discipline: "Компьютерные комплексы и сети",
+        teacher: "Малютин",
+        classroom: "1-330"
+    },
+    {
+        evenWeek: true,
+        day: 5,
+        lesson: 3,
+        lessontype: "лаб",
+        group: "22з",
+        subgroup: null,
+        discipline: "Тестирование программных продуктов",
+        teacher: "Елизаров",
+        classroom: "1-467"
+    },
+    {
+        evenWeek: true,
+        day: 5,
+        lesson: 4,
+        lessontype: "кср",
+        group: "22з",
+        subgroup: null,
+        discipline: "Тестирование программных продуктов",
+        teacher: "Елизаров",
+        classroom: "1-467"
     },
 ]
 

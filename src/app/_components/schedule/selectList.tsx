@@ -78,6 +78,7 @@ export default function SelectList (
     return (
       <>
       <select className = "p-1" defaultValue={selectedOption} onChange = {(e) => handleSelectChange(e.target.value)}>
+        <option key = {""} value={""}>[не выбрано]</option>
         {searchByList.map(l => 
           <option key = {l.id} value = {l.id}>{l.name}</option>
         )}

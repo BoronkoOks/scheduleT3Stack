@@ -9,7 +9,7 @@ export default function SearchByRadio (
 ) {
     const searchParams = useSearchParams();
     const searchBy = searchParams.get(paramString) || "group";
-    const selected = searchParams.get(paramString) || "selected";
+    const selected = searchParams.get(paramString) || "";
     const pathname = usePathname();
     const { replace } = useRouter();
 
