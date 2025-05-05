@@ -749,7 +749,7 @@ const teacherDiscs = [
     {
         teacher: "Волчанина",
         discipline: "Основы теории управления",
-        lectures: true,
+        lectures: false,
         subgroup: "все"
     },
     {
@@ -851,6 +851,19 @@ const academicPlan = [
         ksr: 0,
         coursework: false,
         exam: false
+    },
+
+    
+    {
+        speciality: "09.02.03",
+        discipline: "Основы теории управления",
+        semester: 5,
+        lectures: 32,
+        practise: 0,
+        labs: 32,
+        ksr: 12,
+        coursework: false,
+        exam: true
     },
 ]
 

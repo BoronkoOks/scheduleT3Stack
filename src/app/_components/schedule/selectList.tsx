@@ -1,8 +1,7 @@
 "use client"
 
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import React, {useState} from "react"
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 
 type resType = {
     id: string,
@@ -40,40 +39,6 @@ export default function SelectList (
 
       setSelectedOption(id)
     }
-
-    // const queryClient = useQueryClient()
-    // const [list, setList] = useState<resType[]>([])
-    // const url = "/api/scheduleSelectList?searchBy=" + searchBy + "&query=" + query
-
-    // const { isPending, isError, data, error } = useQuery({
-    //     queryKey: ["scheduleSelectList", "searchBy", "query"],
-        
-    //     queryFn: async () => {
-    //         const results = await fetch(url).then((res) => res.json())
-            
-    //         setList(results.map((u: resType) => u))
-
-    //         return results
-    //     },
-    // })
-
-
-
-    // if (isPending) {
-    //   return (
-    //     <div className="m-4">Загрузка...</div>
-    //   )
-    // }
-  
-    // if (isError) {
-    //   return (
-    //     <div className="m-4">Ошибка: {JSON.stringify(error)}
-    //     /
-    //     {JSON.stringify(list)}
-    //     searchBy = {searchBy}, query = {query}
-    //     </div>
-    //   )
-    // }
     
     return (
       <>

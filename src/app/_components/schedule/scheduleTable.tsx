@@ -5,8 +5,8 @@ import type { Schedule } from "@prisma/client"
 import ScheduleCell from "./scheduleCell"
 
 
-export default function ScheduleTable ({schedule, forWho, edit = false}:
-    {schedule: Schedule[], forWho: string, edit: boolean}
+export default function ScheduleTable ({schedule, forWho, edit = false, evenWeek}:
+    {schedule: Schedule[], forWho: string, edit: boolean, evenWeek: boolean}
 ){
     const tdStyle = "border border-black border-solid"
 
@@ -42,7 +42,9 @@ export default function ScheduleTable ({schedule, forWho, edit = false}:
                             <td className = {tdStyle + " text-center"} key = {d}>
                                 <ScheduleCell forWho = {forWho} edit = {edit} selectedCell={selectedCell}
                                     handleCellSelect={handleCellSelect} tr = {l} td = {d}
-                                    lessons = {schedule.filter(s => (s.day == d && s.lesson == l))}/>
+                                    lessons = {schedule.filter(s => (s.day == d && s.lesson == l))}
+                                    evenWeek = {evenWeek}
+                                    />
                             </td>
                         )}
                     </tr>

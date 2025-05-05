@@ -139,18 +139,20 @@ export default async function Home(props:
       <main>
         <h2 className = {pageHeaderStyle}>Расписание</h2>
         <div className = "mt-4 mb-6">
-          <SearchPanel searchByList = {results} edit = {edit}/>
+          <SearchPanel searchByList = {results}/>
         </div>
-        <div className = "mt-4 mb-6 ml-2 mr-2">
-          <div className="mb-2">
-            <ScheduleDropdown summary = "Нечётная неделя" edit = {false}
-              schedule = {lessons.filter(l => l.evenWeek == false)} forWho = {searchBy} />
+        {selected != "" &&
+          <div className = "mt-4 mb-6 ml-2 mr-2">
+            <div className="mb-2">
+              <ScheduleDropdown summary = "Нечётная неделя" edit = {edit} evenWeek = {false}
+                schedule = {lessons.filter(l => l.evenWeek == false)} forWho = {searchBy} />
+            </div>
+            <div>
+              <ScheduleDropdown summary = "Чётная неделя" edit = {edit} evenWeek = {true}
+                schedule = {lessons.filter(l => l.evenWeek == true)} forWho = {searchBy} />
+            </div>
           </div>
-          <div>
-            <ScheduleDropdown summary = "Чётная неделя" edit = {false}
-              schedule = {lessons.filter(l => l.evenWeek == true)} forWho = {searchBy} />
-          </div>
-        </div>
+        }
       </main>
     </HydrateClient>
   )
