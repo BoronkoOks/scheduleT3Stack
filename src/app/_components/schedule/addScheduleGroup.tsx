@@ -18,7 +18,7 @@ export function AddScheduleGroup ({groupId, evenWeek, day, lesson} :
         lesson: lesson,
         groupId: groupId,
 
-        lessontype: "лек",
+        lessontype: "пр",
         subgroup: null,
         disciplineId: "",
         teacherId: "",
@@ -147,7 +147,6 @@ export function AddScheduleGroup ({groupId, evenWeek, day, lesson} :
                     <select value = {newlesson.lessontype}
                         onChange={(e) => setNewLesson({...newlesson, lessontype: e.target.value})}
                     >
-                        <option value = "лек">лекция</option>
                         <option value = "пр">практика</option>
                         <option value = "лаб">лабораторная</option>
                         <option value = "кср">кср</option>

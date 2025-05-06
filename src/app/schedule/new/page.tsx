@@ -1,10 +1,11 @@
 import React, { Suspense } from "react"
 import { db } from "~/server/db"
 import {pageHeaderStyle} from "~/styles/daisystyles"
-import { AddScheduleGroup } from "~/app/_components/schedule/addSchedule"
+import { AddScheduleGroup } from "~/app/_components/schedule/addScheduleGroup"
 import { Schedule } from "@prisma/client"
 import ScheduleDropdown from "~/app/_components/schedule/scheduleDropdown"
 import { getRole, isAdmin, isAdminOrCurrentUser } from "~/app/api/auth/check"
+import { AddScheduleTeacher } from "~/app/_components/schedule/addScheduleTeacher"
 
 export default async function Page (props: {searchParams: 
     Promise<{forWho?: string, id?: string; evenWeek?: string; day?: number; lesson?: number}>}
@@ -58,8 +59,13 @@ export default async function Page (props: {searchParams:
         <main>
             <h2 className = {pageHeaderStyle}>{pageTitle}</h2>
             <div className = "mt-4 ml-2 mb-6 mr-2">
-                <AddScheduleGroup groupId = {id} evenWeek = {evenWeek} day = {day} lesson = {lesson} />
-            </div>
+                {
+                    forWho == "group" ?
+                    <AddScheduleGroup groupId = {id} evenWeek = {evenWeek} day = {day} lesson = {lesson} />
+                    :
+                    <AddScheduleTeacher teacherId = {id} evenWeek = {evenWeek} day = {day} lesson = {lesson} />
+                }
+                </div>
         </main>
     )
 }

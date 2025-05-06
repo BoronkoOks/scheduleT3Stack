@@ -45,5 +45,20 @@ export const disciplineRouter = createTRPCRouter({
             })
 
             return discs ?? []
+        }),
+
+    getListByTeacherId: protectedProcedure
+        .input(
+            z.object({
+                teacherId: z.string()
+            })
+        )
+        .query(async ({ ctx, input }) => {
+            const discs = await ctx.db.teacherDiscipline.findMany({
+                where: {teacherId: input.teacherId},
+                include: {discipline: true}
+            })
+
+            return discs ?? []
         })
 })
