@@ -1,9 +1,7 @@
-import React, { Suspense } from "react"
+import React from "react"
 import { db } from "~/server/db"
 import {pageHeaderStyle} from "~/styles/daisystyles"
 import { AddScheduleGroup } from "~/app/_components/schedule/addScheduleGroup"
-import { Schedule } from "@prisma/client"
-import ScheduleDropdown from "~/app/_components/schedule/scheduleDropdown"
 import { getRole, isAdmin, isAdminOrCurrentUser } from "~/app/api/auth/check"
 import { AddScheduleTeacher } from "~/app/_components/schedule/addScheduleTeacher"
 
