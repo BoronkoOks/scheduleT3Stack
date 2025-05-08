@@ -35,7 +35,7 @@ export function Navbar (
             }
 
             <Link href = "/schedule" onClick={()=> setCurrentPage("/schedule")}
-                className = {currentPage == "/schedule" ? currentPageButton : emptyPage}
+                className = {currentPage == "/schedule" ? currentPageButton : navbarButton}
             >
                 Расписание
             </Link>

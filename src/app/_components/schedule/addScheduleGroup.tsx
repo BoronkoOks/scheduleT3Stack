@@ -1,14 +1,20 @@
 "use client"
 
-import { updateButtonStyle, divForm } from "~/styles/daisystyles"
+import { updateButtonStyle } from "~/styles/daisystyles"
 import { api } from "~/trpc/react"
 import { useState } from "react"
 import { Classroom, Schedule } from "@prisma/client"
 import ScheduleForDay from "./scheduleForDay"
+import { useSearchParams } from "next/navigation"
 
-export function AddScheduleGroup ({groupId, evenWeek, day, lesson} :
-{groupId: string, evenWeek: boolean, day: number, lesson: number}
-) {
+export function AddScheduleGroup () {
+    const params = useSearchParams()
+
+    const groupId = params.get("id") || ""
+    const evenWeek = params.get("evenWeek") == "true" ? true : false
+    const day = Number(params.get("day")) || 1
+    const lesson = Number(params.get("lesson")) || 1
+
     const labelStyle = "mx-4"
 
     const [newlesson, setNewLesson] = useState<Schedule>({
@@ -31,7 +37,8 @@ export function AddScheduleGroup ({groupId, evenWeek, day, lesson} :
     const teachers = api.teacherDiscipline.getByDisciplineId.useQuery({disciplineId: newlesson.disciplineId})
     const teacherLessons = api.schedule.getForDayByTeacherId.useQuery(
         {teacherId: newlesson.teacherId, evenWeek: evenWeek, day: Number(day)})
-    const classrooms = api.classroom.getList.useQuery({query: ""})
+    const classrooms = api.classroom.getFreeAtThisTime.useQuery(
+        {query: "", evenWeek: evenWeek, day: day, lesson: lesson})
     
     const addLessonMutation = api.schedule.addLesson.useMutation()
     const utils = api.useUtils()
@@ -80,7 +87,7 @@ export function AddScheduleGroup ({groupId, evenWeek, day, lesson} :
             groupId: groupId,
 
             lessontype: newlesson.lessontype,
-            subgroup: newlesson.subgroup || undefined,
+            subgroup: (newlesson.lessontype == "кср" || newlesson.lessontype == "крб" || newlesson.lessontype == "кпр") ? undefined : (newlesson.subgroup || undefined),
             disciplineId: newlesson.disciplineId,
             teacherId: newlesson.teacherId,
             classroomID: newlesson.classroomID
@@ -151,16 +158,8 @@ export function AddScheduleGroup ({groupId, evenWeek, day, lesson} :
                         <option value = "лаб">лабораторная</option>
                         <option value = "кср">кср</option>
                         <option value = "крб">крб</option>
-                        <option value = "пр">кпр</option>
+                        <option value = "кпр">кпр</option>
                     </select>
-                    {/* <select defaultValue = {lectures ? "лек" : "пр"}>
-                        {lectures && <option value = "лек">лекция</option>}
-                        { subgroups != "-" && <option value = "пр">практика</option>}
-                        { subgroups != "-" && <option value = "лаб">лабораторная</option>}
-                        { subgroups != "-" && <option value = "кср">кср</option>}
-                        <option value = "крб">крб</option>
-                        <option value = "пр">кпр</option>
-                    </select> */}
                 </div>
 
                 <div className = "mt-4">
@@ -168,26 +167,18 @@ export function AddScheduleGroup ({groupId, evenWeek, day, lesson} :
                     {teachers.status == "pending" || newlesson.teacherId == "" ?  <>(выберите преподавателя)</>
                     :
                         <>
-                        <select value = {newlesson.subgroup ?? "все"}
-                            onChange={(e) => {handleSubgroupChange(e.target.value)}}
-                        >
-                            <option key = "все" value = "все">все</option>
-                            <option key = {1} value = {1}>1</option>
-                            <option key = {2} value = {2}>2</option>
-                        </select>
-                        {/* {subgroups == "все" ?
-                            <select>
-                                <option value = "все">Все</option>
-                                <option value = "1">1</option>
-                                <option value = "2">2</option>
-                            </select>
+                        {
+                            newlesson.lessontype == "кср" || newlesson.lessontype == "крб" || newlesson.lessontype == "кпр" ?
+                            <>все</>
                             :
-                            <select>
-                                <option value = {subgroups == "-" ? "все" : subgroups}>
-                                    {subgroups == "-" ? "все" : subgroups}
-                                </option>
+                            <select value = {newlesson.subgroup ?? "все"}
+                                onChange={(e) => {handleSubgroupChange(e.target.value)}}
+                            >
+                                <option key = "все" value = "все">все</option>
+                                <option key = {1} value = {1}>1</option>
+                                <option key = {2} value = {2}>2</option>
                             </select>
-                        } */}
+                        }
                         </>
                     }
                 </div>

@@ -3,13 +3,16 @@
 import { updateButtonStyle, divForm } from "~/styles/daisystyles"
 import { api } from "~/trpc/react"
 import { useState } from "react"
-import { Classroom, Group, Schedule } from "@prisma/client"
-import ScheduleForDay from "./scheduleForDay"
-import { group } from "console"
+import { Classroom,  Schedule } from "@prisma/client"
+import { useSearchParams } from "next/navigation"
 
-export function AddScheduleTeacher ({teacherId, evenWeek, day, lesson} :
-{teacherId: string, evenWeek: boolean, day: number, lesson: number}
-) {
+export function AddScheduleTeacher () {
+    const params = useSearchParams()
+
+    const teacherId = params.get("id") || ""
+    const evenWeek = params.get("evenWeek") == "true" ? true : false
+    const day = Number(params.get("day")) || 1
+    const lesson = Number(params.get("lesson")) || 1
     const labelStyle = "mx-4"
 
     const [newlesson, setNewLesson] = useState<Schedule>({
@@ -30,7 +33,8 @@ export function AddScheduleTeacher ({teacherId, evenWeek, day, lesson} :
 
     const disciplines = api.discipline.getListByTeacherId.useQuery({teacherId: teacherId})
     const groups = api.group.getByDisciplineId.useQuery({disciplineId: newlesson.disciplineId})
-    const classrooms = api.classroom.getList.useQuery({query: ""})
+    const classrooms = api.classroom.getFreeAtThisTime.useQuery(
+        {query: "", evenWeek: evenWeek, day: day, lesson: lesson})
     
     
     const addLessonMutation = api.schedule.addLesson.useMutation()
@@ -82,7 +86,7 @@ export function AddScheduleTeacher ({teacherId, evenWeek, day, lesson} :
 
         if (newlesson.lessontype == "лек") {
             setErrMessage("лек")
-            for (let i = 0; i < groups.data?.length; i++) {
+            for (let i = 0; i < (groups.data?.length || 0); i++) {
                 addLessonMutation.mutate({
                         evenWeek: evenWeek,
                         day: Number(day),

@@ -2,32 +2,51 @@ import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 
 export const disciplineRouter = createTRPCRouter({
-    getListByGroupId: protectedProcedure
+    getListByGroupId: protectedProcedure // Дисциплины группы на текущий сесместр
         .input(
             z.object({
                 groupId: z.string()
             })
         )
         .query(async ({ ctx, input }) => {
-            const group = await ctx.db.group.findFirst({
-                where: {id: input.groupId}
+            const groupInfo = await ctx.db.group.findFirst({
+                where: {
+                    id: input.groupId
+                }
             })
 
-            const specDiscs = await ctx.db.specialityDisc.findMany({
-                where: {specialityId: group?.specialityId},
-                include: {
-                    discipline: true
+            const academicPlan = await ctx.db.academicPlan.findMany({
+                where: {
+                    discSpec: {
+                        speciality: {
+                            Group: {
+                                some: {
+                                    id: input.groupId
+                                }
+                            }
+                        }
+                    }
                 },
-                orderBy: {
-                    discipline: {
-                        name: "asc"
+                include: {
+                    discSpec: {
+                        include: {
+                            discipline: true
+                        }
                     }
                 }
             })
 
-            const disciplines = specDiscs.map(sd => {
-                return {id: sd.discipline.id, name: sd.discipline.name}
-            })
+            const currentYear = new Date().getFullYear()
+            const correction = new Date().getMonth() > 8 ? 1 : 0
+            const semester = (currentYear - (groupInfo?.year || 0))*2 + correction
+
+            const plans = academicPlan.filter(ap =>
+                ap.semester == semester
+            )
+
+            const disciplines = plans.map(p =>
+                p.discSpec.discipline
+            )
 
             return disciplines ?? []
         }),

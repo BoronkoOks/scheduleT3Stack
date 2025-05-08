@@ -21,7 +21,7 @@ export async function isAdmin() {
 }
 
 
-export async function isAdminOrCurrentUser(teacherId: string) {
+export async function isAdminOrSelectedTeacher(teacherId: string) {
     const session = await auth()
 
     if (!session){

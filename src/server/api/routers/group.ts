@@ -12,27 +12,6 @@ export const groupRouter = createTRPCRouter({
             })
         )
         .query(async ({ ctx, input }) => {
-            // const academicPlans = await ctx.db.academicPlan.findMany({
-            //     where: {
-            //         discSpec: {
-            //             disciplineId: input.disciplineId
-            //         }
-            //     },
-                // include: {
-                //     speciality: {
-                //         include: {
-                //             SpecDisc: {
-                //                 include: {
-                //                     AcademicPlan: true
-                //                 }
-                //             }
-                //         }
-                //     }
-                // },
-                // orderBy: {
-                //     name: "asc"
-                // }
-            // })
             const groupsArr = await ctx.db.group.findMany({
                 where: {
                     speciality: {

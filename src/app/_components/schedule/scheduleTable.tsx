@@ -21,7 +21,7 @@ export default function ScheduleTable ({schedule, forWho, edit = false, evenWeek
 
     return (
         <>
-        {JSON.stringify(selectedCell)}
+        {/* {JSON.stringify(selectedCell)} */}
         <table className="text-xs ">
             <thead>
                 <tr>

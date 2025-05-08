@@ -1,6 +1,6 @@
 import { HydrateClient } from "~/trpc/server"
 import {pageHeaderStyle} from "~/styles/daisystyles"
-import { getRole, isAdmin, isAdminOrCurrentUser } from "~/app/api/auth/check"
+import { getRole, isAdmin, isAdminOrSelectedTeacher } from "~/app/api/auth/check"
 import SearchPanel from "~/app/_components/schedule/searchPanel"
 import { db } from "~/server/db"
 import { Schedule } from "@prisma/client"
@@ -127,7 +127,7 @@ export default async function Home(props:
   let edit = false
 
   if (searchBy == "teacher" && selected != "") {
-    edit = await isAdminOrCurrentUser(selected)
+    edit = await isAdminOrSelectedTeacher(selected)
   }
   else {
     edit = await isAdmin()
