@@ -1,6 +1,6 @@
 import { HydrateClient } from "~/trpc/server"
 import {pageHeaderStyle} from "~/styles/daisystyles"
-import { getRole, isAdmin, isAdminOrSelectedTeacher } from "~/app/api/auth/check"
+import { isAdmin, isAdminOrSelectedTeacher } from "~/app/api/auth/check"
 import SearchPanel from "~/app/_components/schedule/searchPanel"
 import { db } from "~/server/db"
 import { Schedule } from "@prisma/client"
@@ -10,13 +10,12 @@ import ScheduleDropdown from "~/app/_components/schedule/scheduleDropdown"
 export default async function Home(props:
   {searchParams: Promise<{ query?: string; searchBy?: string, selected?: string }>}
 ) {
-  const role = (await getRole())
-
   const searchParams = await props.searchParams;
   const query = searchParams.query || ""
   const searchBy = searchParams.searchBy || "group"
   const selected = searchParams.selected || ""
 
+  // Содержит список групп/преподавателей/кабинетов в зависимости от критерия searchBy
   let results: {id: string, name: string}[]
   
   switch (searchBy) {
@@ -75,7 +74,7 @@ export default async function Home(props:
     default: results = []; break;
   }
 
-
+  // Содержит массив занятий, найденных по запросу (зависит от searchBy)
   let lessons: Schedule[] = []
 
   if (selected != "") {
@@ -123,14 +122,15 @@ export default async function Home(props:
     }
   }
   
-  
+  // Режим чтения/редактирования
   let edit = false
 
   if (searchBy == "teacher" && selected != "") {
+    // разрешить пользователю-преподавателю редактировать, если просматривается его расписание
     edit = await isAdminOrSelectedTeacher(selected)
   }
   else {
-    edit = await isAdmin()
+    edit = await isAdmin() // разрешить редактировать, если пользователь - администратор
   }
 
 
@@ -139,10 +139,11 @@ export default async function Home(props:
       <main>
         <h2 className = {pageHeaderStyle}>Расписание</h2>
         <div className = "mt-4 mb-6">
-          <SearchPanel searchByList = {results}/>
+          <SearchPanel searchByList = {results}/> {/* панель поиска */}
         </div>
         {selected != "" &&
           <div className = "mt-4 mb-6 ml-2 mr-2">
+            {/* Раскрывающиеся элементы с расписанием */}
             <div className="mb-2">
               <ScheduleDropdown summary = "Нечётная неделя" edit = {edit} evenWeek = {false}
                 schedule = {lessons.filter(l => l.evenWeek == false)} forWho = {searchBy} />

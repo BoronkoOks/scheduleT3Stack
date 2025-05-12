@@ -11,11 +11,10 @@ type resType = {
 export default function SelectList (
   {searchByList, paramString = "selected"}: {searchByList: resType[], paramString?: string}
 ) {
-
-    const searchParams = useSearchParams();
-    const selected = searchParams.get(paramString) || "";
-    const pathname = usePathname();
-    const { replace } = useRouter();
+    const searchParams = useSearchParams()
+    const selected = searchParams.get("selected") || ""
+    const pathname = usePathname()
+    const { replace } = useRouter()
 
     const [selectedOption, setSelectedOption] = useState<string>(selected)
 
@@ -25,8 +24,6 @@ export default function SelectList (
       const params = new URLSearchParams(searchParams)
 
       found = searchByList.find(l => l.id === id)
-
-      console.log("\n\n, found: ", found, "\n\n")
 
       if (found) {
         params.set(paramString, id)
@@ -48,7 +45,6 @@ export default function SelectList (
           <option key = {l.id} value = {l.id}>{l.name}</option>
         )}
       </select>
-      {JSON.stringify(found)}
       </>
     )
 }

@@ -1,12 +1,9 @@
-import { auth } from "~/server/auth";
-import { SigninLink } from "./_components/homepage/signlink"
-import React from "react";
+import { auth } from "~/server/auth"
+import React from "react"
 import Link from "next/link"
 import { updateButtonStyle } from "~/styles/daisystyles"
 import { db } from "~/server/db"
-import { getRole } from "./api/auth/check"
-import { User } from "@prisma/client";
-import { ForGuest, ForUser } from "./_components/homepage/rolesDescription";
+import { ForGuest, ForUser } from "./_components/homepage/rolesDescription"
 
 
 export default async function Home() {

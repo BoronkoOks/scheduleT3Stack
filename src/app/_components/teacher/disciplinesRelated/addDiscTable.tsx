@@ -11,10 +11,13 @@ export function AddDiscTable ({query, teacherId}:
 ) {
     const queryClient = useQueryClient()
     const [discsToAdd, setDiscsToAdd] = React.useState<Discipline[]>([])
+
+    // адрес api
     const url = "/api/teacherNotRelatedDisciplines?teacherId=" + teacherId + "&query=" + query
   
     const tdStyle = "px-2 border border-black border-solid"
 
+    // GET-запрос
     const { isPending, isError, data, error } = useQuery({
         queryKey: ["teacherNotRelatedDisciplines", "teacherId", "query"],
         queryFn: async () => {
@@ -25,6 +28,7 @@ export function AddDiscTable ({query, teacherId}:
         },
     })
 
+    // POST-запрос
     const postMutation = useMutation({
         mutationFn: async (disciplineId: string) => {
             const response = await fetch(url, {
@@ -43,18 +47,20 @@ export function AddDiscTable ({query, teacherId}:
         },
     })
 
-
+    // Действие для кнопки добавления
     function handleAdd(id: string) {
         postMutation.mutate(id)
     }
 
 
+    // Данные ещё загружаются
     if (isPending) {
         return (
         <div className="m-4">Загрузка...</div>
         )
     }
 
+    // Что-то пошло не так
     if (isError) {
         return (
         <div className="m-4">Ошибка: {JSON.stringify(error)}</div>

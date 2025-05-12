@@ -24,7 +24,7 @@ export async function AddGroup () {
             </summary>
             <form className = "collapse-content form-control" action = {createGroup} >
                 <input type="hidden" name="id" defaultValue="" />
-
+            <div className="flex">
                 <div className = {divField}>
                 <label className = "mt-2 mr-2">Название</label>
                 <input
@@ -34,7 +34,7 @@ export async function AddGroup () {
                     className= {inputClassStyle + " w-16 ml-2"}
                 />
                 </div>
-                <div className = {divField + " mt-2"}>
+                <div className = {divField + " ml-4"}>
                 <label className = "mt-2 mr-2">Студентов</label>
                 <input
                     type="number"
@@ -43,6 +43,7 @@ export async function AddGroup () {
                     className={inputClassStyle + " w-16"}
                     defaultValue = "0"
                 />
+            </div>
             </div>
             <div className = {divField + " mt-2"}>
                 <label className = "mt-2 mr-2">Год поступления</label>
@@ -53,7 +54,7 @@ export async function AddGroup () {
                     name="year"
                     className={inputClassStyle + " w-20"}
                     defaultValue = {Number(new Date().getFullYear())}
-                    />
+                />
             </div>
             <div className="mt-4 mr-4">
                 <label>Специальность</label>

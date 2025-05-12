@@ -13,6 +13,7 @@ export default function ScheduleTable ({schedule, forWho, edit = false, evenWeek
     const days = [1, 2, 3, 4, 5, 6]
     const lessons = [1, 2, 3, 4, 5]
 
+    // Текущая ячейка
     const [selectedCell, setSelectedCell] = useState<{tr: number, td: number, item: number} | null>(null)
 
     function handleCellSelect (tr: number, td: number, item: number) {
@@ -21,7 +22,6 @@ export default function ScheduleTable ({schedule, forWho, edit = false, evenWeek
 
     return (
         <>
-        {/* {JSON.stringify(selectedCell)} */}
         <table className="text-xs ">
             <thead>
                 <tr>
@@ -54,4 +54,3 @@ export default function ScheduleTable ({schedule, forWho, edit = false, evenWeek
         </>
     )
 }
-

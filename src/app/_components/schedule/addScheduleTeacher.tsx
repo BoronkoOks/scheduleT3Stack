@@ -29,20 +29,27 @@ export function AddScheduleTeacher () {
         classroomID: ""
     })
 
+    // для отображения информации о выбранном кабинете
     const [classroom, setClassroom] = useState<Classroom | undefined>()
-
+  
+    // дисциплины преподавателя
     const disciplines = api.discipline.getListByTeacherId.useQuery({teacherId: teacherId})
+
+    // группы, изучающие выбранную дисциплину в этом семестре
     const groups = api.group.getByDisciplineId.useQuery({disciplineId: newlesson.disciplineId})
+
+    // список кабинетов, свободных в данное время
     const classrooms = api.classroom.getFreeAtThisTime.useQuery(
         {query: "", evenWeek: evenWeek, day: day, lesson: lesson})
     
-    
+    // мутация
     const addLessonMutation = api.schedule.addLesson.useMutation()
     const utils = api.useUtils()
 
+    // для сообщения об ошибке
     const [errMessage, setErrMessage] = useState<string>("")
 
-
+    // определить название дня
     let dayName = ""
 
     switch (Number(day)) {
@@ -55,7 +62,7 @@ export function AddScheduleTeacher () {
         default: dayName = "???"; break;
     }
 
-
+    // изменение типа занятия
     function handleLessonTypeChange(lessonType: string){
         if (lessonType == "лек") {
             setNewLesson({...newlesson, lessontype: lessonType, groupId: "", subgroup: null})
@@ -65,6 +72,7 @@ export function AddScheduleTeacher () {
         }
     }
 
+    // изменение подгруппы
     function handleSubgroupChange(sg: number | string) {
         if (Number(sg)) {
             setNewLesson({...newlesson, subgroup: Number(sg)})
@@ -74,18 +82,16 @@ export function AddScheduleTeacher () {
         }
     }
 
+    // изменение выбранного кабинета
     function handleClassroomChange(id: string) {
         setNewLesson({...newlesson, classroomID: id})
         setClassroom(classrooms.data?.find(c => c.id == id))
     }
 
-
+    // Добавление занятия
     const handleSave = () => {
-        // console.log("\n\n", handleSave, "\n\n")
-            setErrMessage("handleSave")
-
         if (newlesson.lessontype == "лек") {
-            setErrMessage("лек")
+            // Если лекция, то добавить запись о занятии для каждой группы
             for (let i = 0; i < (groups.data?.length || 0); i++) {
                 addLessonMutation.mutate({
                         evenWeek: evenWeek,
@@ -111,6 +117,7 @@ export function AddScheduleTeacher () {
                 )
             }
         }
+        // Если практика - просто добавить занятие
         else {
             addLessonMutation.mutate({
                 evenWeek: evenWeek,
@@ -127,7 +134,7 @@ export function AddScheduleTeacher () {
                 {
                     onSuccess: () => {
                         utils.schedule.getForDayByTeacherId.invalidate()
-                        // setErrMessage("")
+                        setErrMessage("")
                     },
                     onError(error, variables, context) {
                         setErrMessage(JSON.stringify(error))
@@ -284,29 +291,19 @@ export function AddScheduleTeacher () {
                     <div className = "mt-4">
                         <div>
                             <button className = {updateButtonStyle + " w-1/2"} onClick={handleSave}>
-                                Сохранить
+                            Добавить
                             </button>
                         </div>
                         <div>
-                        {/* {
+                        {
                             errMessage != "" && errMessage != "{}" &&
                             <label className="text-red-500">{errMessage}</label>
-                        } */}
+                        }
                         </div>
                     </div>
                 }
             </div>
         </div>
-        {/* {
-            teacherLessons.status == "pending" ? <>загрузка...</>
-            :
-            <div className="ml-6">
-            {
-                newlesson.teacherId != "" && teacherLessons.data && 
-                <ScheduleForDay schedule={teacherLessons.data ?? []} forWho = {"teacher"} day = {day} lesson = {lesson} />
-            }
-            </div>
-        } */}
         </div>
     )
 }

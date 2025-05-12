@@ -5,7 +5,7 @@ import type { Schedule } from "@prisma/client"
 import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline"
 import { deleteSchedule } from "~/app/api/action/schedule"
 import Link from "next/link"
-import { usePathname, useRouter, useSearchParams } from "next/navigation"
+import { useSearchParams } from "next/navigation"
 
 
 export default function ScheduleCell (
@@ -22,13 +22,13 @@ export default function ScheduleCell (
     }
 ) {
     const searchParams = useSearchParams()
-    const selected = searchParams.get("selected") || ""
-
+    const selected = searchParams.get("selected") || "" // для создания ссылки на добавление занятия
 
     const itemSelectedStyle = "bg-green-300"
     const deleteButtonStyle = "bg-red-400 border-2 rounded-md border-red-500 hover:text-gray-50 hover:bg-red-700"
     const addButtonStyle = "bg-green-400 border-2 rounded-md border-green-500 hover:text-gray-50 hover:bg-green-700"
 
+    // если в данный день и в данное время нет занятий
     if (lessons.length == 0) {
         return (
             <div onClick={() => handleCellSelect(tr, td, 0)}
@@ -46,12 +46,14 @@ export default function ScheduleCell (
         )
     }
 
-
+    // удаление занятия группы
     async function handleDeleteGroupLesson(id: string) {
         await deleteSchedule(id)
     }
 
+    // Выбрано отображение расписания группы
     if (forWho == "group") {
+        // Если одна пара и это не лекция/кср -> вывести пару + кнопку для добавления пары для другой подгруппы (в режиме редактирования)
         if (lessons.length == 1 && lessons[0]?.lessontype != "лек" && lessons[0]?.lessontype != "кср" && lessons[0]?.lessontype != "кпр") {
             return (
                 <table className="w-full">
@@ -95,6 +97,7 @@ export default function ScheduleCell (
             )
         }
 
+        // в любом другом случае - просто вывести информацию о парах
         return (
             <table className="w-full">
                 <tbody>
@@ -121,8 +124,9 @@ export default function ScheduleCell (
     }
 
 
-
+    // для удаления занятия у преподавателя
     async function handleDeleteTeacherLessons() {
+        // удалить занятие у каждой из присутствующих групп
         for (let i = 0; i < lessons.length; i++) {
             if (lessons[i]?.id) {
                 await deleteSchedule(lessons[i]?.id || "")
@@ -130,11 +134,13 @@ export default function ScheduleCell (
         }
     }
 
+    // Выбрано отображение расписания преподавателя
     if (forWho == "teacher") {
         const lessontype = lessons[0]?.lessontype
         let group = lessons[0]?.group.name
         let subgroup
 
+        // Если это лекция, перечислить все подгруппы
         if (lessontype == "лек") {
             for (let i = 1; i < lessons.length; i++) {
                 group = group + ", " + lessons[i]?.group.name
@@ -142,7 +148,7 @@ export default function ScheduleCell (
 
             subgroup = ""
         }
-        else {
+        else { // если практика - отобразить подгруппу
             subgroup = lessons[0]?.subgroup? lessons[0]?.subgroup + " пг" : ""
         }
 
@@ -166,7 +172,7 @@ export default function ScheduleCell (
         )
     }
 
-
+    // Выбрано отображение расписания кабинета
     if (forWho == "classroom") {
         const lessontype = lessons[0]?.lessontype
         let group = lessons[0]?.group.name
@@ -203,6 +209,7 @@ export default function ScheduleCell (
         )
     }
     
+    // Если forWho имеет какое-то другое значение
     return (
         <div>???</div>
     )

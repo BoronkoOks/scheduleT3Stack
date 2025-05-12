@@ -1,4 +1,3 @@
-import React from "react"
 import SearchInput from "~/app/ui/searchInput"
 import SearchByRadio from "./searchByRadio"
 import SelectList from "./selectList"
@@ -11,7 +10,6 @@ type resType = {
 export default function SearchPanel({searchByList}:
     {searchByList: resType[]}
 ) {
-
     return (
         <>
             <div>

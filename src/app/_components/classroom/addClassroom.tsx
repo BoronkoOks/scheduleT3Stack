@@ -33,17 +33,17 @@ export function AddClassroom () {
               type="number"
               min = "0"
               name="seats"
-              className = {inputClassStyle + " w-16"}
+              className = {inputClassStyle + " ml-2 w-16"}
               defaultValue = "0"
           />
         </div>
           <div className = {divField}>
-            <label className = "mt-2 mr-1 ml-7">Компьютеров</label>
+            <label className = "mt-2 mr-1 ml-4">Компьютеров</label>
             <input
               type="number"
               min = "0"
               name="computers"
-              className={"input input-bordered w-16"}
+              className={"input input-bordered w-16 ml-2"}
               defaultValue = "0"
               />
           </div>

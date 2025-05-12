@@ -13,7 +13,6 @@ export default async function Page (props: {searchParams:
 
     const forWho = params.forWho || "group"
     const id = params.id || ""
-    const evenWeek = params.evenWeek == "true" ? true : false
     const day = params.day || 1
     const lesson = params.lesson || 1
 
@@ -65,7 +64,7 @@ export default async function Page (props: {searchParams:
 
     // Проверить допустимость номера пары
 
-    if (lesson < 1 || lesson > 6) {
+    if (lesson < 1 || lesson > 5) {
         return (
             <Err_404 message = "Невозможно создать занятие для указанной пары." />
         )

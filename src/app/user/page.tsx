@@ -6,7 +6,6 @@ import React from "react"
 import { getRole } from "~/app/api/auth/check"
 import UserTable from "../_components/user/userTable"
 import { AddUser } from "~/app/_components/user/addUser"
-import { metadata } from "../layout"
 
 
 export default async function Home(props: {searchParams: Promise<{ query?: string; page?: string }>}) {
@@ -25,8 +24,6 @@ export default async function Home(props: {searchParams: Promise<{ query?: strin
   const query = searchParams.query || ""
   const page = Number(searchParams?.page) || 1
   const size = 10
-
-  metadata.title = "Пользователи"
 
   const whereUsers = { email: {startsWith: query, mode: 'insensitive'}}
 

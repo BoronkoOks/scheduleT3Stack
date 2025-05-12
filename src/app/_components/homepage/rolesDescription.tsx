@@ -78,7 +78,6 @@ function ForTeacher() {
                     <ul className = "list-disc list-inside">
                         <li>Редактирование своего профиля пользователя</li>
                         <li>Редактирование своего расписания</li>
-                        <li>Просмотр и поиск по разделам сайта</li>
                     </ul>
                 </div>
             </details>
@@ -98,7 +97,10 @@ function ForStudent() {
                     <b>Что это даёт?</b>
                 </summary>
                 <div className = "collapse-content w-max" >
-                    Ничего :)
+                    <ul className = "list-disc list-inside">
+                        <li>Редактирование своего профиля пользователя</li>
+                        <li>на этом всё :)</li>
+                    </ul>
                 </div>
             </details>
         </div>

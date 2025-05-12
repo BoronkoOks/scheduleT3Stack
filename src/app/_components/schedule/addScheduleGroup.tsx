@@ -31,31 +31,31 @@ export function AddScheduleGroup () {
         classroomID: ""
     })
 
+    // для отображения информации о выбранном кабинете
     const [classroom, setClassroom] = useState<Classroom | undefined>()
 
+    // дисциплины группы на текущий семестр
     const disciplines = api.discipline.getListByGroupId.useQuery({groupId: groupId})
+
+    // преподаватели для выбранной дисциплины
     const teachers = api.teacherDiscipline.getByDisciplineId.useQuery({disciplineId: newlesson.disciplineId})
+    
+    // занятия преподавателя на выбранный день
     const teacherLessons = api.schedule.getForDayByTeacherId.useQuery(
         {teacherId: newlesson.teacherId, evenWeek: evenWeek, day: Number(day)})
+
+    // список кабинетов, свободных в данное время
     const classrooms = api.classroom.getFreeAtThisTime.useQuery(
         {query: "", evenWeek: evenWeek, day: day, lesson: lesson})
     
+    // мутации
     const addLessonMutation = api.schedule.addLesson.useMutation()
     const utils = api.useUtils()
-
+    
+    // для сообщения об ошибке
     const [errMessage, setErrMessage] = useState<string>("")
 
-
-    function handleTeacherSelect (id: string) {
-        setNewLesson({...newlesson, teacherId: id})
-    }
-
-    function handleClassroomChange(id: string) {
-        setNewLesson({...newlesson, classroomID: id})
-        setClassroom(classrooms.data?.find(c => c.id == id))
-    }
-
-
+    // определить название дня
     let dayName = ""
 
     switch (Number(day)) {
@@ -68,7 +68,18 @@ export function AddScheduleGroup () {
         default: dayName = "???"; break;
     }
 
+    // изменение выбранного преподавателя
+    function handleTeacherSelect (id: string) {
+        setNewLesson({...newlesson, teacherId: id})
+    }
 
+    // изменение выбранного кабинета
+    function handleClassroomChange(id: string) {
+        setNewLesson({...newlesson, classroomID: id})
+        setClassroom(classrooms.data?.find(c => c.id == id))
+    }
+
+    // изменение подгруппы
     function handleSubgroupChange(sg: number | string) {
         if (Number(sg)) {
             setNewLesson({...newlesson, subgroup: Number(sg)})
@@ -78,7 +89,7 @@ export function AddScheduleGroup () {
         }
     }
 
-
+    // Добавление занятия
     const handleSave = () => {
             addLessonMutation.mutate({
             evenWeek: evenWeek,
@@ -215,7 +226,7 @@ export function AddScheduleGroup () {
                     <div className = "mt-4">
                         <div>
                             <button className = {updateButtonStyle + " w-1/2"} onClick={handleSave}>
-                                Сохранить
+                                Добавить
                             </button>
                         </div>
                         <div>

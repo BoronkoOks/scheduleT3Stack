@@ -46,7 +46,7 @@ export async function GroupInfoMODE ({groupId} : {groupId: string}) {
                             type="text"
                             name="name"
                             required
-                            className="input input-bordered w-40"
+                            className="input input-bordered w-16 ml-2"
                             defaultValue={group.name ?? ""}
                         />
                     </div>

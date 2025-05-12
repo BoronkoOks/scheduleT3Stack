@@ -1,25 +1,22 @@
 "use client"
 
-import React, {useState, useEffect} from "react"
+import React, {useState} from "react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 
 
-export default function SearchByRadio (
-    {paramString = "searchBy"}: {paramString?: string}
-) {
-    const searchParams = useSearchParams();
-    const searchBy = searchParams.get(paramString) || "group";
-    const selected = searchParams.get(paramString) || "";
-    const pathname = usePathname();
-    const { replace } = useRouter();
+export default function SearchByRadio () {
+    const searchParams = useSearchParams()
+    const searchBy = searchParams.get("searchBy") || "group"
+    const pathname = usePathname()
+    const { replace } = useRouter()
 
     const [radio, setRadio] = useState<string>(searchBy)
 
     function handleRadioChange (rad: string) {
         const params = new URLSearchParams(searchParams)
 
-        params.set(paramString, rad)
-        params.delete("selected")
+        params.set("searchBy", rad)
+        params.delete("selected") // очистить selected при переключении
 
         replace(`${pathname}?${params.toString()}`)
         setRadio(rad)

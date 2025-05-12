@@ -10,11 +10,14 @@ export default function TeacherDiscTable({ teacherId, mode }:
 ) {
   const queryClient = useQueryClient()
   const [discs, setDiscs] = React.useState<TeacherDiscipline[]>([])
+
+  // адрес api
   const url = "/api/teacherDisciplines?teacherId=" + teacherId
   
   const tdStyle = "px-2 border border-black border-solid"
   const edit = mode === "ADMIN"
 
+  // GET-запрос
   const { isPending, isError, data, error } = useQuery({
     queryKey: ["teacherDisciplines", "teacherId"],
 
@@ -26,6 +29,7 @@ export default function TeacherDiscTable({ teacherId, mode }:
     },
   })
 
+  // DELETE-запрос
   const deleteMutation = useMutation({
     mutationFn: async (id: string) => {
       const response = await fetch(`/api/teacherDisciplines/${id}`, {
@@ -42,6 +46,7 @@ export default function TeacherDiscTable({ teacherId, mode }:
     },
     })
 
+  // PUT-запрос
   const putMutation = useMutation({
     mutationFn: async (dt: TeacherDiscipline) => {
       const response = await fetch(`/api/teacherDisciplines/${dt.id}`, {
@@ -56,11 +61,7 @@ export default function TeacherDiscTable({ teacherId, mode }:
     },
   })
 
-
-  function handleDelete(id: string) {
-    deleteMutation.mutate(id);
-  }
-
+  // Изменение чекбокса "Лекции"
   function handleChangeLectures (id: string, lectures: boolean) {
     setDiscs(discs.map(d => {
       if (d.id != id) {
@@ -72,6 +73,7 @@ export default function TeacherDiscTable({ teacherId, mode }:
     }))
   }
 
+  // Изменение выбранной подгруппы
   function handleChangeSubgroup (id: string, subgroup: string) {
     setDiscs(discs.map(d => {
       if (d.id != id) {
@@ -83,6 +85,7 @@ export default function TeacherDiscTable({ teacherId, mode }:
     }))
   }
 
+  // Действие для кнопки сохранения
   function handleSave(id: string) {
     const td = discs.find(d => d.id == id)
       if (td){
@@ -90,13 +93,19 @@ export default function TeacherDiscTable({ teacherId, mode }:
       }
   }
 
+  // Действие для кнопки удаления
+  function handleDelete(id: string) {
+    deleteMutation.mutate(id);
+  }
 
+  // Данные ещё загружаются
   if (isPending) {
     return (
       <div className="m-4">Загрузка...</div>
     )
   }
 
+  // Что-то пошло не так
   if (isError) {
     return (
       <div className="m-4">Ошибка: {JSON.stringify(error)}</div>
