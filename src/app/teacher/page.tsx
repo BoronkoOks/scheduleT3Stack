@@ -7,7 +7,6 @@ import Pagination from "../ui/pagination"
 import SearchInput from "~/app/ui/searchInput"
 import React from "react"
 import { getRole } from "~/app/api/auth/check"
-import { metadata } from "../layout"
 
 
 export default async function Home(props:
@@ -19,8 +18,6 @@ export default async function Home(props:
   const query = searchParams.query || ""
   const page = Number(searchParams?.page) || 1
   const size = 10
-
-  metadata.title = "Преподаватели"
 
   const whereTeachers = { surname: {startsWith: query, mode: 'insensitive'}}
 

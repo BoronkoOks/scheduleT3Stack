@@ -2,7 +2,6 @@ import React, { Suspense } from "react"
 import { db } from "~/server/db"
 import { auth } from "~/server/auth"
 import { ProfileInfoMODE } from "../_components/myprofile/profileInfo"
-import { TeacherInfo } from "../_components/teacher/teacherInfo"
 
 export default async function Page () {
     const userId = (await auth())?.user.id

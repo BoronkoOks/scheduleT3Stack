@@ -5,7 +5,6 @@ import { AddDiscipline } from "~/app/_components/discipline/addDiscipline"
 import SearchInput from "~/app/ui/searchInput"
 import Pagination from "~/app/ui/pagination"
 import { getRole } from "~/app/api/auth/check"
-import { metadata } from "../layout"
 
 
 export default async function Home(props:
@@ -17,8 +16,6 @@ export default async function Home(props:
   const query = searchParams.query || ""
   const page = Number(searchParams?.page) || 1
   const size = 10
-
-  metadata.title = "Дисциплины"
 
   const whereDisciplines = { name: {startsWith: query, mode: 'insensitive'}}
   
